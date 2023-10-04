@@ -4,7 +4,7 @@
         //return MYSQL connection object
         public static function getConnection(){
             //open configuration file
-            $configPath = $_SERVER['DOCUMENT_ROOT'].'/Sites/config/mysqlConnection.json';
+            $configPath = $_SERVER['DOCUMENT_ROOT'].'/AbarrotesSTEP/config/mysqlConnection.json';
             $configData = json_decode(file_get_contents($configPath), true);
             //check parameters
             if(isset($configData['server'])){
