@@ -2,14 +2,16 @@
 //use files
 require_once('mysqlConnection.php');
 require_once('exceptions/recordNotFoundException.php');
+require_once('categoria.php');
+require_once('subcategoria.php');
 
 //classs name
 class Producto
 {
     //Atributes
     private $producto_id;
-    private $categoria_id;
-    private $subcategoria_id;
+    private $categoria;
+    private $subcategoria;
     private $nombre;
     private $descripcion;
     private $foto;
@@ -27,20 +29,20 @@ class Producto
     
     public function getCategoriaId()
     {
-        return $this->categoria_id;
+        return $this->categoria;
     }
     public function setCategoriaId($value)
     {
-        $this->categoria_id = $value;
+        $this->categoria = $value;
     }
 
     public function getSubcategoriaId()
     {
-        return $this->subcategoria_id;
+        return $this->subcategoria;
     }
     public function setSubcategoriaId($value)
     {
-        $this->subcategoria_id = $value;
+        $this->subcategoria = $value;
     }
 
     public function getNombre()
@@ -85,8 +87,8 @@ class Producto
         //empty constructors
         if (func_num_args()==0){
             $this-> producto_id = 0;
-            $this-> categoria_id = 0;
-            $this-> subcategoria_id = 0;
+            $this-> categoria = new Categoria();
+            $this-> subcategoria = new Subcategoria();
             $this-> nombre = "";
             $this-> descripcion = "";
             $this-> foto = "";
@@ -99,7 +101,8 @@ class Producto
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
-            $query = "Select producto_id, categoria_id, subcategoria_id, nombre, descripcion, foto, estatus From producto
+            $query = "  Select p.producto_id, c.categoria_id, c.nombre, c.estatus, s.subcategoria_id,s.nombre , s.estatus, 
+            p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id
             Where producto_id = ?";
             //command
             $command = $connection->prepare($query);
@@ -108,13 +111,13 @@ class Producto
             //execute
             $command->execute();
             //bind result
-            $command->bind_result($producto_id, $categoria_id, $subcategoria_id, $nombre, $descripcion, 
+            $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
             $foto, $estatus);
             //record was found
             if($command->fetch()){
                 $this->producto_id = $producto_id;
-                $this->categoria_id = $categoria_id;
-                $this->subcategoria_id = $subcategoria_id;
+                $this->categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+                $this->subcategoria = new subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
                 $this->nombre = $nombre;
                 $this->descripcion = $descripcion;
                 $this->foto = $foto;
@@ -134,8 +137,8 @@ class Producto
             $arguments = func_get_args();
             //pass arguments to attributes
             $this->producto_id = $arguments[0];
-            $this->categoria_id = $arguments[1];
-            $this->subcategoria_id = $arguments[2];
+            $this->categoria = $arguments[1];
+            $this->subcategoria = $arguments[2];
             $this->nombre = $arguments[3];
             $this->descripcion = $arguments[4];
             $this->foto = $arguments[5];
@@ -149,8 +152,8 @@ class Producto
         return json_encode(
             array(
                 'producto_id' => $this->producto_id,
-                'categoria_id' => $this->categoria_id,
-                'subcategoria_id' => $this->subcategoria_id,
+                'categoria_id' => json_decode($this->categoria->toJson()),
+                'subcategoria_id' => json_decode($this->subcategoria->toJson()),
                 'nombre' => $this->nombre,
                 'descripcion' => $this->descripcion,
                 'foto' => $this->foto,
@@ -166,17 +169,21 @@ class Producto
         //get connection
         $connection = MysqlConnection::getConnection();
         //query
-        $query = "Select producto_id, categoria_id, subcategoria_id, nombre, descripcion, foto, estatus From producto";
+        $query = "  Select p.producto_id, c.categoria_id, c.nombre, c.estatus, s.subcategoria_id,s.nombre , s.estatus, 
+        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id;";
         //command
         $command = $connection->prepare($query);
         //execute
         $command->execute();
         //bind results
-        $command->bind_result($producto_id, $categoria_id, $subcategoria_id, $nombre, $descripcion, 
+        $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
         $foto, $estatus);
+        //record was found
         //fetch data
         while($command->fetch()){
-            array_push($records, new Producto($producto_id, $categoria_id, $subcategoria_id, $nombre, $descripcion, 
+            $categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+            $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
+            array_push($records, new Producto($producto_id, $categoria, $subcategoria, $nombre, $descripcion, 
             $foto, $estatus));
         }
         //close command
@@ -210,7 +217,7 @@ class Producto
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param('iisssi', $this->categoria_id, $this->subcategoria_id, $this->nombre, 
+        $command->bind_param('iisssi', $this->categoria, $this->subcategoria, $this->nombre, 
         $this->descripcion, $this->foto, $this->estatus);
         //execute
         $result = $command->execute();
