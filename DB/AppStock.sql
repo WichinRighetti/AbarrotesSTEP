@@ -39,7 +39,6 @@ create table inventario(
 inventario_id int primary key auto_increment,
 producto_id int not null,
 almacen_id int not null,
-nombre_almacen varchar(255) not null,
 cantidad int default 0 not null,
 
 foreign key (producto_id) references producto(producto_id),
@@ -162,4 +161,11 @@ cantidad int not null,
 fecha date not null
 );
 
-select * from almacen;
+Select e.entrada_id, p.producto_id, c.categoria_id, c.nombre, p.nombre Producto, p.descripcion, p.foto,
+                i.inventario_id, a.almacen_id, a.nombre Almacen, a.direccion, a.descripcion 'Descripcion Almacen', i.cantidad,
+                e.cantidad Entrada, e.fecha 
+                from entrada e left JOIN inventario i ON e.inventario_id = i.inventario_id
+                left JOIN almacen a ON i.almacen_id = a.almacen_id
+                left JOIN producto p ON i.producto_id = p.producto_id
+                left JOIN categoria c ON p.categoria_id = c.categoria_id
+                left JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id;
