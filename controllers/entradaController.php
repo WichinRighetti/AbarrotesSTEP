@@ -4,18 +4,18 @@
     //Allow methods
     header('Access-Control-Methods: GET, POST, PUT, DELETE');
 
-    require_once($_SERVER['DOCUMENT_ROOT'].'/abarrotesStep/models/almacen.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/abarrotesStep/models/entrada.php');
 
     //get (read)
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
         //parameters
-        if(isset($_GET['almacen_id'])){
+        if(isset($_GET['entrada_id'])){
             try{
-                $a = new Almacen($_GET['almacen_id']);
+                $e = new Entrada($_GET['entrada_id']);
                 //display
                 echo json_encode(array(
                     'status'=> 0,
-                    'almacen' => json_decode(($a->toJson()))
+                    'entrada' => json_decode(($e->toJson()))
                 ));
             }catch(RecordNotFOundException $ex){
                 echo json_encode(array(
@@ -26,7 +26,7 @@
         }else{
             echo json_encode(array(
                 'status' => 0,
-                'almacen' => json_decode(almacen::getAllByJson())
+                'entrada' => json_decode(entrada::getAllByJson())
             ));
         }
     }
