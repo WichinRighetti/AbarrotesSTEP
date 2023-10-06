@@ -11,11 +11,11 @@
         //Parameter
         if(isset($_GET['producto_id'])){
             try{
-                $c = new Producto($_GET['producto_id']);
+                $p = new Producto($_GET['producto_id']);
                 //Display
                 echo json_encode(array(
                     'status' => 0,
-                    'state' => json_decode($c->toJson())
+                    'state' => json_decode($p->toJson())
                 ));
             }catch(RecordNotFoundException $ex){
                 echo json_encode(array(
