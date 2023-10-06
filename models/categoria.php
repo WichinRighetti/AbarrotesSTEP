@@ -60,7 +60,7 @@
                 $connection->close();
             }
             //Constructor with data from arguments
-            if(func_num_args() == 4){
+            if(func_num_args() == 3){
                 //get arguments
                 $arguments = func_get_args();
                 //pass arguments to attributes
