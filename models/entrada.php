@@ -1,6 +1,10 @@
 <?php
     //use files
     require_once('mysqlConnection.php');
+    require_once('subcategoria.php');
+    require_once('categoria.php');
+    require_once('producto.php');
+    require_once('inventario.php');
 
     class Entrada{
         //attributes
@@ -36,9 +40,9 @@
                 //get connection
                 $connection = MysqlConnection::getConnection();
                 //query
-                $query = "Select e.entrada_id, p.producto_id, c.categoria_id, c.nombre, c.status 'Categoria status', c.categoria_id, 
-                c.nombre, c.status 'Categoria status', s.subategoria_id, s.nombre, s.status 'Subcategoria status'p.nombre Producto, 
-                p.descripcion, p.foto, i.inventario_id, a.almacen_id, a.nombre Almacen, a.direccion, a.descripcion 'Descripcion Almacen', i.cantidad,
+                $query = "Select e.entrada_id, p.producto_id, c.categoria_id, c.nombre, c.estatus 'Categoria status', 
+                s.subcategoria_id, s.nombre, s.estatus 'Subcategoria status', p.nombre Producto, p.descripcion, p.foto, 
+                i.inventario_id, a.almacen_id, a.nombre Almacen, a.direccion, a.descripcion 'Descripcion Almacen', i.cantidad,
                 e.cantidad Entrada, e.fecha 
                 from entrada e left JOIN inventario i ON e.inventario_id = i.inventario_id
                 left JOIN almacen a ON i.almacen_id = a.almacen_id
@@ -64,7 +68,7 @@
                     //pass values to the attributes
                     $this->entrada_id = $id;
                     $this->inventario = $i;
-                    $this->cantidad = $cantidad;
+                    $this->cantidad = $cantidadEntrada;
                     $this->fecha = $fecha;
                 }else{
                     // throw exception if record not found
@@ -104,9 +108,9 @@
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
-            $query = "Select e.entrada_id, p.producto_id, c.categoria_id, c.nombre, c.status 'Categoria status', c.categoria_id, 
-            c.nombre, c.status 'Categoria status', s.subategoria_id, s.nombre, s.status 'Subcategoria status'p.nombre Producto, 
-            p.descripcion, p.foto, i.inventario_id, a.almacen_id, a.nombre Almacen, a.direccion, a.descripcion 'Descripcion Almacen', i.cantidad,
+            $query = "Select e.entrada_id, p.producto_id, c.categoria_id, c.nombre, c.estatus 'Categoria status', 
+            s.subcategoria_id, s.nombre, s.estatus 'Subcategoria status', p.nombre Producto, p.descripcion, p.foto, 
+            i.inventario_id, a.almacen_id, a.nombre Almacen, a.direccion, a.descripcion 'Descripcion Almacen', i.cantidad,
             e.cantidad Entrada, e.fecha 
             from entrada e left JOIN inventario i ON e.inventario_id = i.inventario_id
             left JOIN almacen a ON i.almacen_id = a.almacen_id

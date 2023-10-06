@@ -11,11 +11,11 @@
         //parameters
         if(isset($_GET['entrada_id'])){
             try{
-                $a = new Almacen($_GET['entrada_id']);
+                $e = new Entrada($_GET['entrada_id']);
                 //display
                 echo json_encode(array(
                     'status'=> 0,
-                    'entrada' => json_decode(($a->toJson()))
+                    'entrada' => json_decode(($e->toJson()))
                 ));
             }catch(RecordNotFOundException $ex){
                 echo json_encode(array(
