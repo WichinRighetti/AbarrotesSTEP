@@ -213,12 +213,12 @@ class Producto
         //get connection
         $connection = MysqlConnection::getConnection();
         //query
-        $query = "Insert Into producto (categoria_id, subcategoria_id, nombre, descripcion, foto, estatus) Values(?, ?, ?, ?, ?)";
+        $query = "Insert Into producto (categoria_id, subcategoria_id, nombre, descripcion, foto) Values(?, ?, ?, ?, ?)";
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param('iisssi', $this->categoria, $this->subcategoria, $this->nombre, 
-        $this->descripcion, $this->foto, $this->estatus);
+        $command->bind_param('iisss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $this->descripcion, $this->foto);
         //execute
         $result = $command->execute();
         //close command
@@ -226,6 +226,18 @@ class Producto
         //close connection
         $connection->close();
         //retun result
+        return $result;
+    }
+    function delete(){
+        $connection = MysqlConnection::getConnection();
+        $query = "Update producto set estatus = 0 where producto_id = ?";
+        //command 
+        $command = $connection->prepare($query);
+        $command->bind_param('i', $this->producto_id);
+        $result = $command->execute();
+        //close command
+        mysqli_stmt_close($command);
+        $connection->close();
         return $result;
     }
 }

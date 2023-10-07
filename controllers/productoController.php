@@ -32,35 +32,54 @@
     }
 
 //POST
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-    if(
-        isset($_POST['ph'])&&
-        isset($_POST['humidity'])&&
-        isset($_POST['h2o'])&&
-        isset($_POST['light'])&&
-        isset($_POST['temperature'])
-    ){
-        try{
-            $record = new Producto(
-                $POST['categoria_id'],
-                $POST['subcategoria_id'],
-                $POST['nombre'],
-                $POST['descripcion'],
-                $POST['foto'],
-                $POST['estatus']
-            );
-
-            if($record->add()){
-                echo json_encode(array('message' => 'Registro agregado'));
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    //check parameters
+    if(isset($_POST['categoria_id']) && isset($_POST['subcategoria_id']) && isset($_POST['nombre']) && isset($_POST['descripcion'])
+    && isset($_POST['foto'])){
+        //error
+        $error = false;
+        if(!$error){
+            //create an empty obect
+            $p = new Producto();
+            //set values
+            $p->setCategoriaId($_POST['categoria_id']);
+            $p->setSubcategoriaId($_POST['subcategoria_id']);
+            $p->setNombre($_POST['nombre']);
+            $p->setDescripcion($_POST['descripcion']);
+            $p->foto($_POST['foto']);
+            //add
+            if($p->add()){
+                echo json_encode(array(
+                    'status' => 0,
+                    'message' => 'producto agregado'
+                ));
             }
-            else{
-                echo json_encode(array('message' => 'Registro no agregado'));
-            }
-        } catch(Exception $ex){
-            echo json_encode(array('message' => $ex->getMessage()));
         }
-    }else{
-        echo json_encode(array('message' => 'Registro no agregado'));
+    }
+    if(isset($_POST['idDelete'])){
+            try{
+                $p = new Producto($_POST['idDelete']);
+            }catch(RecordNotFoundException $ex){
+                echo json_encode(array(
+                    'status' => 2,
+                    'errorMessage' => 'Producto Id not found'
+                ));
+                $error = true;
+            }if($p->delete()){
+                    echo json_encode(array(
+                       'status' => 0,
+                       'message' => 'Product deleted successfully'
+                    ));
+                }else{echo json_encode(array(
+                    'status' => 3,
+                    'errorMessage' => 'Could not delete Product.'
+                ));
+            }
+        }else{
+        echo json_encode(array(
+            'status' => 3,
+            'errorMessage' => 'Product cant be added'
+        ));
     }
 }
-?>
+
