@@ -217,7 +217,7 @@ class Producto
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param('iisss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $command->bind_param('iisss', $this->categoria->getCategoriaId(), $this->subcategoria->getSubcategoriaId(), $this->nombre, 
         $this->descripcion, $this->foto);
         //execute
         $result = $command->execute();
@@ -228,6 +228,7 @@ class Producto
         //retun result
         return $result;
     }
+
     function delete(){
         $connection = MysqlConnection::getConnection();
         $query = "Update producto set estatus = 0 where producto_id = ?";
