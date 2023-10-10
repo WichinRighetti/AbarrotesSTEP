@@ -36,6 +36,13 @@
             margin-right: 20px;
             margin-bottom: 20px;
         }
+
+        /* Scrolldown */
+        #contenedor {
+            
+            overflow-y: scroll; /* Habilita el desplazamiento vertical */
+            border: 1px solid #ccc; /* Agrega un borde */
+        }
     </style>
 
 </head>
@@ -73,7 +80,8 @@ $productos = Producto::getAllByJson();
                                 <div class="card-title">
                                     <h6 class="mr-2"><span>Productos</span></h6>
                                 </div>
-                                <div class="e-table">
+                                <!-- Tabla -->
+                                <div id="contenedor" class="e-table">
                                     <div class="table-responsive mt-3">
                                         <table class="table table-bordered">
                                             <thead>
@@ -125,6 +133,7 @@ $productos = Producto::getAllByJson();
                                             </tbody>
                                         </table>
                                     </div>
+                                    <!-- Fin de la Tabla -->
                                     <!-- Paginación -->
                                     <div class="d-flex justify-content-center">
                                         <ul class="pagination mt-3 mb-0">
@@ -138,6 +147,7 @@ $productos = Producto::getAllByJson();
                                             <li class="page-item"><a href="#" class="page-link">»</a></li>
                                         </ul>
                                     </div>
+                                    <!-- Fin de Paginación -->
                                 </div>
                             </div>
                         </div>
