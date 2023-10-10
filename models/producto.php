@@ -170,7 +170,7 @@ class Producto
         $connection = MysqlConnection::getConnection();
         //query
         $query = "  Select p.producto_id, c.categoria_id, c.nombre, c.estatus, s.subcategoria_id,s.nombre , s.estatus, 
-        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id;";
+        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id WHERE estatus = 1;";
         //command
         $command = $connection->prepare($query);
         //execute
