@@ -9,7 +9,6 @@
         private $inventario_id;
         private $producto_id;
         private $almacen_id;
-        private $nombre_almacen;
         private $cantidad;
 
         //setters & getters
@@ -19,8 +18,6 @@
         public function getProducto_id(){return $this->producto_id;}
         public function setAlmacen_id($value){$this->almacen_id = $value;}
         public function getAlmacen_id(){return $this->almacen_id;}
-        public function setNombre_almacen($value){$this->nombre_almacen = $value;}
-        public function getNombre_almacen(){return $this->nombre_almacen;}
         public function setCantidad($value){$this->cantidad = $value;}
         public function getCantidad(){return $this->cantidad;}
 
@@ -32,7 +29,6 @@
                 $this->inventario_id = 0;
                 $this->producto_id = 0; // new Producto();
                 $this->almacen_id = 0;
-                $this->nombre_almacen = '';
                 $this->cantidad = 0;
             }
             //constructor with data from database
@@ -97,7 +93,6 @@
                 'inventario_id'=>$this->inventario_id,
                 'producto_id'=>json_decode($this->producto_id->toJson()),
                 'almacen_id'=>$this->almacen_id,
-                'nombre_almacen'=>$this->nombre_almacen,
                 'cantidad'=>$this->cantidad
             ));
         }
@@ -149,6 +144,27 @@
             }
             //return list
             return json_encode($list);
+        }
+
+        //add
+        public function add()
+        {
+            //get connection
+            $connection = MysqlConnection::getConnection();
+            //query
+            $query = "Insert Into inventario (producto_id, almacen_id, cantidad) Values(?, ?, ?)";
+            //command
+            $command = $connection->prepare($query);
+            //bin parameter
+            $command->bind_param('iii', $this->producto_id, $this->almacen_id, $this->cantidad);
+            //execute
+            $result = $command->execute();
+            //close command
+            mysqli_stmt_close($command);
+            //close connection
+            $connection->close();
+            //retun result
+            return $result;
         }
     }
 ?>
