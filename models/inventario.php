@@ -110,7 +110,8 @@
             LEFT JOIN producto p ON i.producto_id = p.producto_id
             LEFT JOIN almacen a ON i.almacen_id = a.almacen_id 
             LEFT JOIN categoria c ON p.categoria_id = c.categoria_id 
-            LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id";
+            LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id
+            Where p.estatus=0";
             //command
             $command = $connection->prepare($query);
             //execute
