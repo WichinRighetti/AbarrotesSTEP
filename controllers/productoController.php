@@ -34,16 +34,18 @@
 //POST
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     if(
-        isset($_POST['ph'])&&
-        isset($_POST['humidity'])&&
-        isset($_POST['h2o'])&&
-        isset($_POST['light'])&&
-        isset($_POST['temperature'])
+        isset($_POST['producto_id'])&&
+        isset($_POST['categoria'])&&
+        isset($_POST['subcategoria'])&&
+        isset($_POST['nombre'])&&
+        isset($_POST['descripcion'])&&
+        isset($_POST['foto'])&&
+        isset($_POST['estatus'])
     ){
         try{
             $record = new Producto(
-                $POST['categoria_id'],
-                $POST['subcategoria_id'],
+                $POST['producto_id'],
+                $POST['categoria'],
                 $POST['nombre'],
                 $POST['descripcion'],
                 $POST['foto'],
@@ -63,4 +65,3 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         echo json_encode(array('message' => 'Registro no agregado'));
     }
 }
-?>

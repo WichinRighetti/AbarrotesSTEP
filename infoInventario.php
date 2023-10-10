@@ -3,13 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>AppStock</title>
+    <title>AppStock - Inventario</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/productos.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
     <style>
         /* Estilos de Flexbox */
@@ -37,12 +36,13 @@
             margin-bottom: 20px;
         }
     </style>
-
 </head>
 
 <?php
+require_once('models/inventario.php');
 require_once('models/Producto.php');
-$productos = Producto::getAllByJson();
+require_once('models/categoria.php');
+require_once('models/subcategoria.php');
 
 ?>
 
@@ -54,8 +54,8 @@ $productos = Producto::getAllByJson();
                 <div class="card p-3">
                     <div class="e-navlist e-navlist--active-bg">
                         <ul class="nav">
-                            <li class="nav-item"><a class="nav-link px-2 active" href="index.php"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Almacen</span></a></li>
-                            <li class="nav-item"><a class="nav-link px-2" href="infoInventario.php"><i class="fa fa-fw fa-th mr-1"></i><span>Inventario</span></a></li>
+                            <li class="nav-item"><a class="nav-link px-2" href="index.php"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Almacen</span></a></li>
+                            <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-th mr-1"></i><span>Inventario</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ $productos = Producto::getAllByJson();
                         <div class="e-panel card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h6 class="mr-2"><span>Productos</span></h6>
+                                    <h6 class="mr-2"><span>Inventario</span></h6>
                                 </div>
                                 <div class="e-table">
                                     <div class="table-responsive mt-3">
@@ -85,43 +85,41 @@ $productos = Producto::getAllByJson();
                                                         </div>
                                                     </th>
 
+                                                    <th scope="col">Almacen</th>
                                                     <th scope="col">Producto ID</th>
                                                     <th scope="col">Categoría</th>
                                                     <th scope="col">Subcategoría</th>
                                                     <th scope="col">Nombre</th>
                                                     <th scope="col">Descripción</th>
                                                     <th scope="col">Foto</th>
-                                                    <th scope="col">Estatus</th>
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Actions</th>
+                                                    <th scope="col">Cantidad</th>
+                                                    <th scope="col">Nivel</th>
+
                                                 </tr>
                                             </thead>
-                                            <tbody id="productos-table-body">
-                                                <!-- Aquí puedes llenar la tabla con los datos de los productos -->
-                                                <?php foreach ($productos as $producto) : ?>
-                                                    <tr>
-                                                        <td class="align-middle">
-                                                            <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                                                <input type="checkbox" class="custom-control-input" id="item-<?php echo $producto['producto_id']; ?>">
-                                                                <label class="custom-control-label" for="item-<?php echo $producto['producto_id']; ?>"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $producto['producto_id']; ?></td>
-                                                        <td><?php echo $producto['categoria_id']['nombre']; ?></td>
-                                                        <td><?php echo $producto['subcategoria_id']['nombre']; ?></td>
-                                                        <td><?php echo $producto['nombre']; ?></td>
-                                                        <td><?php echo $producto['descripcion']; ?></td>
-                                                        <td><?php echo $producto['foto']; ?></td>
-                                                        <td><?php echo $producto['estatus']; ?></td>
-                                                        <td></td>
-                                                        <td>
-                                                            <div class="btn-group align-top">
-                                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="modal" data-target="#user-form-modal">Edit</button>
-                                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-id="<?php echo $producto['producto_id']; ?>"><i class="fa fa-trash"></i></button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                <?php endforeach; ?>
+                                            <tbody id="inventario-table-body">
+                                                <?php
+
+                                                foreach ($inventarioList as $inventario) {
+                                                    echo "<tr>";
+                                                    echo "<td class='align-top'>";
+                                                    echo "<div class='custom-control custom-control-inline custom-checkbox custom-control-nameless m-0'>";
+                                                    echo "<input type='checkbox' class='custom-control-input' id='item-" . $inventario->getInventario_id() . "'>";
+                                                    echo "<label class='custom-control-label' for='item-" . $inventario->getInventario_id() . "'></label>";
+                                                    echo "</div>";
+                                                    echo "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getNombre_almacen() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getProducto_id() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getCategoria()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getSubcategoria()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getDescripcion() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getFoto() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getCantidad() . "</td>";
+                                                    echo "<td scope='col'>Nivel</td>";
+                                                    echo "</tr>";
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -146,7 +144,8 @@ $productos = Producto::getAllByJson();
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center px-xl-3">
-                                    <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#user-form-modal">Altas</button>
+                                    <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#entrada-form-modal">Agregar Entrada</button>
+                                    <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#salida-form-modal">Agregar Salida</button>
                                 </div>
                                 <hr class="my-3">
                                 <div class="e-navlist e-navlist--active-bold">
@@ -304,7 +303,6 @@ $productos = Producto::getAllByJson();
             </div>
         </div>
     </div>
-
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
