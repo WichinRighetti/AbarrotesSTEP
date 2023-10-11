@@ -40,9 +40,6 @@
 
 <?php
 require_once('models/inventario.php');
-require_once('models/Producto.php');
-require_once('models/categoria.php');
-require_once('models/subcategoria.php');
 
 ?>
 
@@ -100,6 +97,8 @@ require_once('models/subcategoria.php');
                                             <tbody id="inventario-table-body">
                                                 <?php
 
+                                                $inventarioList = Inventario::getAll();
+
                                                 foreach ($inventarioList as $inventario) {
                                                     echo "<tr>";
                                                     echo "<td class='align-top'>";
@@ -108,10 +107,10 @@ require_once('models/subcategoria.php');
                                                     echo "<label class='custom-control-label' for='item-" . $inventario->getInventario_id() . "'></label>";
                                                     echo "</div>";
                                                     echo "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getNombre_almacen() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getProducto_id() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getCategoria()->getNombre() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getSubcategoria()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getAlmacen_id()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getProductoId() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getCategoriaId()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getSubcategoriaId()->getNombre() . "</td>";
                                                     echo "<td scope='col'>" . $inventario->getProducto_id()->getNombre() . "</td>";
                                                     echo "<td scope='col'>" . $inventario->getProducto_id()->getDescripcion() . "</td>";
                                                     echo "<td scope='col'>" . $inventario->getProducto_id()->getFoto() . "</td>";
@@ -194,112 +193,70 @@ require_once('models/subcategoria.php');
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
-                    <div class="modal-dialog modal-lg" role="document">
+
+                <!-- Modal para Agregar Entrada -->
+                <div class="modal fade" id="entrada-form-modal" tabindex="-1" role="dialog" aria-labelledby="entrada-form-modal-label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Create User</h5>
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <span aria-hidden="true">×</span>
+                                <h5 class="modal-title" id="entrada-form-modal-label">Agregar Entrada</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="py-1">
-                                    <form class="form" novalidate>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label>Full Name</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="John Smith" value="John Smith">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label>Username</label>
-                                                            <input class="form-control" type="text" name="username" placeholder="johnny.s" value="johnny.s">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label>Email</label>
-                                                            <input class="form-control" type="text" placeholder="user@example.com">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col mb-3">
-                                                        <div class="form-group">
-                                                            <label>About</label>
-                                                            <textarea class="form-control" rows="5" placeholder="My Bio"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-sm-6 mb-3">
-                                                <div class="mb-2"><b>Change Password</b></div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label>Current Password</label>
-                                                            <input class="form-control" type="password" placeholder="••••••">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label>New Password</label>
-                                                            <input class="form-control" type="password" placeholder="••••••">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                            <input class="form-control" type="password" placeholder="••••••">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-5 offset-sm-1 mb-3">
-                                                <div class="mb-2"><b>Keeping in Touch</b></div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        z <label>Email Notifications</label>
-                                                        <div class="custom-controls-stacked px-2">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="notifications-blog" checked>
-                                                                <label class="custom-control-label" for="notifications-blog">Blog posts</label>
-                                                            </div>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="notifications-news" checked>
-                                                                <label class="custom-control-label" for="notifications-news">Newsletter</label>
-                                                            </div>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="notifications-offers" checked>
-                                                                <label class="custom-control-label" for="notifications-offers">Personal Offers</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col d-flex justify-content-end">
-                                                <button class="btn btn-primary" type="submit">Save Changes</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                <form id="entrada-form">
+                                    <div class="form-group">
+                                        <label for="fecha-entrada">Fecha de Entrada</label>
+                                        <input type="date" class="form-control" id="fecha-entrada" name="fecha-entrada">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cantidad-entrada">Cantidad de Entrada</label>
+                                        <input type="number" class="form-control" id="cantidad-entrada" name="cantidad-entrada">
+                                    </div>
+                                    <!-- Otros campos relacionados con la entrada -->
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-success">Guardar Entrada</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal para Agregar Salida -->
+                <div class="modal fade" id="salida-form-modal" tabindex="-1" role="dialog" aria-labelledby="salida-form-modal-label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="salida-form-modal-label">Agregar Salida</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="salida-form">
+                                    <div class="form-group">
+                                        <label for="fecha-salida">Fecha de Salida</label>
+                                        <input type="date" class="form-control" id="fecha-salida" name="fecha-salida">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cantidad-salida">Cantidad de Salida</label>
+                                        <input type="number" class="form-control" id="cantidad-salida" name="cantidad-salida">
+                                    </div>
+                                    <!-- Otros campos relacionados con la salida -->
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-danger">Guardar Salida</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
