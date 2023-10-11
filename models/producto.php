@@ -170,7 +170,7 @@ class Producto
         $connection = MysqlConnection::getConnection();
         //query
         $query = "  Select p.producto_id, c.categoria_id, c.nombre, c.estatus, s.subcategoria_id,s.nombre , s.estatus, 
-        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id;";
+        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id WHERE estatus = 1;";
         //command
         $command = $connection->prepare($query);
         //execute
@@ -217,7 +217,7 @@ class Producto
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param('iisss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $command->bind_param('iisss', $this->categoria->getCategoriaId(), $this->subcategoria->getSubcategoriaId(), $this->nombre, 
         $this->descripcion, $this->foto);
         //execute
         $result = $command->execute();
@@ -228,6 +228,7 @@ class Producto
         //retun result
         return $result;
     }
+
     function delete(){
         $connection = MysqlConnection::getConnection();
         $query = "Update producto set estatus = 0 where producto_id = ?";

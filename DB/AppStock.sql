@@ -40,6 +40,7 @@ inventario_id int primary key auto_increment,
 producto_id int not null,
 almacen_id int not null,
 cantidad int default 0 not null,
+Maximo int default 0 not null
 
 foreign key (producto_id) references producto(producto_id),
 foreign key (almacen_id) references almacen(almacen_id)
