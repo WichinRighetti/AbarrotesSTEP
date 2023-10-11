@@ -74,7 +74,7 @@
 //POST
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //check parameters
-    if(isset($_POST['categoria_id']) && isset($_POST['subcategoria_id']) && isset($_POST['nombre']) && isset($_POST['descripcion'])
+    if(!isset($_POST['idDelete']) && isset($_POST['categoria_id']) && isset($_POST['subcategoria_id']) && isset($_POST['nombre']) && isset($_POST['descripcion'])
     && isset($_POST['foto'])){
         //error
         $error = false;
@@ -96,28 +96,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
     }else if(isset($_POST['idDelete'])){
+
             try{
                 $p = new Producto($_POST['idDelete']);
             }catch(RecordNotFoundException $ex){
                 echo json_encode(array(
                     'status' => 2,
-                    'errorMessage' => 'Producto Id not found'
+                    'errorMessage' => 'Producto ID  no encontrado'
                 ));
                 $error = true;
             }if($p->delete()){
                     echo json_encode(array(
                        'status' => 0,
-                       'message' => 'Product deleted successfully'
+                       'message' => 'Producto eliminado'
                     ));
                 }else{echo json_encode(array(
                     'status' => 3,
-                    'errorMessage' => 'Could not delete Product.'
+                    'errorMessage' => 'No se puedo eliminar el producto'
                 ));
             }
         }else{
         echo json_encode(array(
             'status' => 3,
-            'errorMessage' => 'Product cant be added'
+            'errorMessage' => 'No se puede agregar el producto.'
         ));
     }
 }

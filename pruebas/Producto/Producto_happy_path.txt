@@ -1,0 +1,440 @@
+Producto
+
+1 Ver todos los productos (GetAll){
+    INPUT
+    GET http://localhost/AbarrotesSTEP/controllers/productoController.php
+
+    OUTPUT
+    {
+        "status": 0,
+        "state": [
+            {
+                "producto_id": 1,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 5,
+                    "nombre": "Calentones",
+                    "estatus": 1
+                },
+                "nombre": "Calenton patio",
+                "descripcion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio",
+                "foto": "https://netflix.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 2,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 4,
+                    "nombre": "Salas",
+                    "estatus": 1
+                },
+                "nombre": "Sillon individual",
+                "descripcion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec",
+                "foto": "http://youtube.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 3,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 3,
+                    "nombre": "Manteles",
+                    "estatus": 1
+                },
+                "nombre": "Redondo rojo",
+                "descripcion": "non, egestas a, dui. Cras pellentesque. Sed dictum. Proin eget",
+                "foto": "https://pinterest.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 4,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 4,
+                    "nombre": "Salas",
+                    "estatus": 1
+                },
+                "nombre": "Taburete",
+                "descripcion": "consectetuer ipsum nunc id enim. Curabitur massa. Vestibulum accumsan neque",
+                "foto": "https://twitter.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 5,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 1,
+                    "nombre": "Sillas",
+                    "estatus": 1
+                },
+                "nombre": "madera blanca",
+                "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                "foto": "http://zoom.us",
+                "estatus": 1
+            }
+        ]
+    }
+}
+
+2 Agregar un producto (Agregar){
+    INPUT
+    POST http://localhost/AbarrotesSTEP/controllers/productoController.php
+    categoria_id: 2
+    subcategoria_id: 2
+    nombre: Producto nuevo3
+    descripcion: Este es un producto nuevo 3
+    foto: direccion/para/foto/del/producto/nuevo3
+
+    OUTPUT
+    {"status":0,"message":"producto agregado"}
+}
+
+3 Ver todos los productos con el nuevo producto (GetAll){
+    INPUT
+    GET http://localhost/AbarrotesSTEP/controllers/productoController.php
+
+    OUTPUT
+    {
+        "status": 0,
+        "state": [
+            {
+                "producto_id": 1,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 5,
+                    "nombre": "Calentones",
+                    "estatus": 1
+                },
+                "nombre": "Calenton patio",
+                "descripcion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio",
+                "foto": "https://netflix.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 2,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 4,
+                    "nombre": "Salas",
+                    "estatus": 1
+                },
+                "nombre": "Sillon individual",
+                "descripcion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec",
+                "foto": "http://youtube.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 3,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 3,
+                    "nombre": "Manteles",
+                    "estatus": 1
+                },
+                "nombre": "Redondo rojo",
+                "descripcion": "non, egestas a, dui. Cras pellentesque. Sed dictum. Proin eget",
+                "foto": "https://pinterest.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 4,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 4,
+                    "nombre": "Salas",
+                    "estatus": 1
+                },
+                "nombre": "Taburete",
+                "descripcion": "consectetuer ipsum nunc id enim. Curabitur massa. Vestibulum accumsan neque",
+                "foto": "https://twitter.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 5,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 1,
+                    "nombre": "Sillas",
+                    "estatus": 1
+                },
+                "nombre": "madera blanca",
+                "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                "foto": "http://zoom.us",
+                "estatus": 1
+            },
+            {
+                "producto_id": 6,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mesas",
+                    "estatus": 1
+                },
+                "nombre": "Producto nuevo",
+                "descripcion": "Este es un producto nuevo",
+                "foto": "direccion/para/foto/del/producto/nuevo",
+                "estatus": 1
+            },
+            {
+                "producto_id": 7,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mesas",
+                    "estatus": 1
+                },
+                "nombre": "Producto nuevo2",
+                "descripcion": "Este es un producto nuevo 2",
+                "foto": "direccion/para/foto/del/producto/nuevo2",
+                "estatus": 1
+            },
+            {
+                "producto_id": 8,
+                "categoria_id": {
+                    "categoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mesas",
+                    "estatus": 1
+                },
+                "nombre": "Producto nuevo3",
+                "descripcion": "Este es un producto nuevo 3",
+                "foto": "direccion/para/foto/del/producto/nuevo3",
+                "estatus": 1
+            }
+        ]
+    }
+}
+
+4 Obtener unicamente el producto nuevo (GetProducto){
+    INPUT
+    GET http://localhost/AbarrotesSTEP/controllers/productoController.php?producto_id=8
+
+    OUTPUT
+    {
+        "status": 0,
+        "state": {
+            "producto_id": 8,
+            "categoria_id": {
+                "subcategoria_id": 2,
+                "nombre": "Mobiliario",
+                "estatus": 1
+            },
+            "subcategoria_id": {
+                "subcategoria_id": 2,
+                "nombre": "Mesas",
+                "estatus": 1
+            },
+            "nombre": "Producto nuevo3",
+            "descripcion": "Este es un producto nuevo 3",
+            "foto": "direccion/para/foto/del/producto/nuevo3",
+            "estatus": 1
+        }
+    }
+}
+
+5 Borrar el producto nuevo (Borrar){
+    INPUT
+    POST http://localhost/AbarrotesSTEP/controllers/productoController.php?producto_id=8
+    idDelete: 8
+
+    OUTPUT
+    {"status":0,"message":"Producto eliminado"}
+}
+
+6 Ver todos los productos sin el producto nuevo (GetAll){
+    INPUT
+    GET http://localhost/AbarrotesSTEP/controllers/productoController.php
+
+    OUTPUT
+    {
+        "status": 0,
+        "state": [
+            {
+                "producto_id": 1,
+                "categoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 5,
+                    "nombre": "Calentones",
+                    "estatus": 1
+                },
+                "nombre": "Calenton patio",
+                "descripcion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio",
+                "foto": "https://netflix.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 2,
+                "categoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 4,
+                    "nombre": "Salas",
+                    "estatus": 1
+                },
+                "nombre": "Sillon individual",
+                "descripcion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec",
+                "foto": "http://youtube.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 3,
+                "categoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 3,
+                    "nombre": "Manteles",
+                    "estatus": 1
+                },
+                "nombre": "Redondo rojo",
+                "descripcion": "non, egestas a, dui. Cras pellentesque. Sed dictum. Proin eget",
+                "foto": "https://pinterest.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 4,
+                "categoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 4,
+                    "nombre": "Salas",
+                    "estatus": 1
+                },
+                "nombre": "Taburete",
+                "descripcion": "consectetuer ipsum nunc id enim. Curabitur massa. Vestibulum accumsan neque",
+                "foto": "https://twitter.com",
+                "estatus": 1
+            },
+            {
+                "producto_id": 5,
+                "categoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 1,
+                    "nombre": "Sillas",
+                    "estatus": 1
+                },
+                "nombre": "madera blanca",
+                "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                "foto": "http://zoom.us",
+                "estatus": 1
+            },
+            {
+                "producto_id": 6,
+                "categoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mesas",
+                    "estatus": 1
+                },
+                "nombre": "Producto nuevo",
+                "descripcion": "Este es un producto nuevo",
+                "foto": "direccion/para/foto/del/producto/nuevo",
+                "estatus": 1
+            },
+            {
+                "producto_id": 7,
+                "categoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mobiliario",
+                    "estatus": 1
+                },
+                "subcategoria_id": {
+                    "subcategoria_id": 2,
+                    "nombre": "Mesas",
+                    "estatus": 1
+                },
+                "nombre": "Producto nuevo2",
+                "descripcion": "Este es un producto nuevo 2",
+                "foto": "direccion/para/foto/del/producto/nuevo2",
+                "estatus": 1
+            }
+        ]
+    }
+}
+
+7 Intentar ver el producto y recibir una alerta (GetProducto){
+    INPUT
+    GET http://localhost/AbarrotesSTEP/controllers/productoController.php?producto_id=8
+    producto_id: 8
+
+    OUTPUT
+        {
+        "status": 0,
+        "state": {
+            "message": "Producto inexistente"
+        }
+    }
+}
