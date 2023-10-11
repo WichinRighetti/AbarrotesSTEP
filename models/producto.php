@@ -201,18 +201,91 @@ class Producto
         return $records;
     }
 
-     //represent object in JSON format
-     public static function getAllByJson()
-     {
+    //represent object in JSON format
+    public static function getAllByJson()
+    {
+    //list
+    $list = array();
+    //get all
+    foreach(self::getAll() as $record){
+        array_push($list, json_decode($record->toJson()));
+    }
+    //return list
+    return json_encode($list);
+    }
+
+    //get all by categoria
+    public static function getAllByFilter($Filter){
+        //list
+        $list = array();
+        $filterValue = array();
+        $types = '';
+        //get connection
+        $connection = MysqlConnection::getConnection();
+        //query
+        $query = 'Select p.producto_id, c.categoria_id, c.nombre, c.estatus, 
+        s.subcategoria_id,s.nombre , s.estatus, p.nombre, p.descripcion, p.foto, p.estatus 
+        From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id 
+        LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id
+        where ';
+
+        foreach($Filter as $category => $element){
+            $query .= "$category ";
+            if( $category == "p.nombre"){
+                $query .= "like ? and ";
+                $types .= 's';
+            }else{
+                $query .= "= ? and ";
+                $types .= 'i';
+            }
+            array_push($filterValue, $element);
+        }
+        $query .= "p.estatus = 1; ";
+        //command
+        $command = $connection->prepare($query);
+        
+        //bind param
+        echo $Filter[0];
+        if(count($Filter) == 3){
+            $command->bind_param($types, $filterValue[0], $filterValue[1], $filterValue[2]);
+        }else if(count($Filter) == 2){
+            $command->bind_param($types, $filterValue[0], $filterValue[1]);
+        }else{
+            $command->bind_param($types, $filterValue[0]);
+        }
+
+        //execute 
+        $command->execute();
+       //bind results
+       $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+       $foto, $estatus);
+       //record was found
+       //fetch data
+       while($command->fetch()){
+           $categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+           $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
+           array_push($list, new Producto($producto_id, $categoria, $subcategoria, $nombre, $descripcion, 
+           $foto, $estatus));
+       }
+       //close command
+       mysqli_stmt_close($command);
+       //close connection
+       $connection->close();
+       //Return records
+       return $list;
+    }
+
+    //get all json by Categoria
+    public static function getAllByJsonByFilter($Filter){
         //list
         $list = array();
         //get all
-        foreach(self::getAll() as $record){
-            array_push($list, json_decode($record->toJson()));
+        foreach(self::getAllByFilter($Filter) as $item){
+            array_push($list, json_decode($item->toJson()));
         }
-        //return list
+
         return json_encode($list);
-     }
+    }
 
     //add
     public function add()
