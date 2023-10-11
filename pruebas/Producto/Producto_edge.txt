@@ -1,0 +1,12 @@
+Agregar un producto con los campos vacios{
+
+}
+
+Borrar un producto que no existe{
+
+}
+
+Agregar un producto con categoria y subcategoria inexistente{
+    
+}
+

@@ -149,16 +149,23 @@ class Producto
     //represent object in JSON format
     public function toJson()
     {
-        return json_encode(
-            array(
-                'producto_id' => $this->producto_id,
-                'categoria_id' => json_decode($this->categoria->toJson()),
-                'subcategoria_id' => json_decode($this->subcategoria->toJson()),
-                'nombre' => $this->nombre,
-                'descripcion' => $this->descripcion,
-                'foto' => $this->foto,
-                'estatus' => $this->estatus)
-        );
+        if($this->estatus=='1'){            
+            return json_encode(
+                array(
+                    'producto_id' => $this->producto_id,
+                    'categoria_id' => json_decode($this->categoria->toJson()),
+                    'subcategoria_id' => json_decode($this->subcategoria->toJson()),
+                    'nombre' => $this->nombre,
+                    'descripcion' => $this->descripcion,
+                    'foto' => $this->foto,
+                    'estatus' => $this->estatus)
+            );
+        }else{
+            return json_encode(
+                array(
+                    'message' => 'Producto inexistente')
+            );
+        }
     }
 
 
@@ -170,7 +177,7 @@ class Producto
         $connection = MysqlConnection::getConnection();
         //query
         $query = "  Select p.producto_id, c.categoria_id, c.nombre, c.estatus, s.subcategoria_id,s.nombre , s.estatus, 
-        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id WHERE estatus = 1;";
+        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id WHERE p.estatus = 1;";
         //command
         $command = $connection->prepare($query);
         //execute
@@ -217,7 +224,7 @@ class Producto
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param('iisss', $this->categoria->getCategoriaId(), $this->subcategoria->getSubcategoriaId(), $this->nombre, 
+        $command->bind_param('iisss', $this->categoria, $this->subcategoria, $this->nombre, 
         $this->descripcion, $this->foto);
         //execute
         $result = $command->execute();
