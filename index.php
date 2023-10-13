@@ -6,38 +6,67 @@
     <title>AppStock</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/productos.js"></script>
-</head>
+    <script src="js/eliminar.js"></script>
+    <script src="js/selector.js"></script>
 
-<?php
-require_once('models/Producto.php');
-$productos = Producto::getAllByJson();
-?>
+    <style>
+        /* Estilos de Flexbox */
+        .container-fluid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sidebar {
+            flex: 0 0 200px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .row.flex-lg-nowrap {
+            flex-wrap: nowrap;
+        }
+
+        .flex-column {
+            flex: 1;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <?php
+    require_once('models/Producto.php');
+    $productos = Producto::getAllByJson();
+
+    ?>
 
 <body>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row flex-lg-nowrap">
-            <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+            <div class="sidebar col-12 col-lg-auto mb-3">
                 <div class="card p-3">
                     <div class="e-navlist e-navlist--active-bg">
                         <ul class="nav">
-                            <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Almacen</span></a></li>
-                            <li class="nav-item"><a class="nav-link px-2" href="#" target="__blank"><i class="fa fa-fw fa-th mr-1"></i><span>Inventario</span></a></li>
-
+                            <li class="nav-item"><a class="nav-link px-2 active" href="index.php"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Almacen</span></a></li>
+                            <li class="nav-item"><a class="nav-link px-2" href="infoInventario.php"><i class="fa fa-fw fa-th mr-1"></i><span>Inventario</span></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="main-content col">
                 <div class="e-tabs mb-3 px-3">
                     <ul class="nav nav-tabs">
                         <li class="nav-item"><a class="nav-link active" href="#">AppStock</a></li>
                     </ul>
                 </div>
                 <div class="row flex-lg-nowrap">
-                    <div class="col mb-3">
+                    <div class="flex-column col mb-3">
                         <div class="e-panel card">
                             <div class="card-body">
                                 <div class="card-title">
@@ -67,38 +96,31 @@ $productos = Producto::getAllByJson();
                                                 </tr>
                                             </thead>
                                             <tbody id="productos-table-body">
+                                                <!-- Aquí puedes llenar la tabla con los datos de los productos -->
+                                                <?php foreach ($productos as $producto) : ?>
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                                                <input type="checkbox" class="custom-control-input" id="item-<?php echo $producto['producto_id']; ?>">
+                                                                <label class="custom-control-label" for="item-<?php echo $producto['producto_id']; ?>"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td><?php echo $producto['producto_id']; ?></td>
+                                                        <td><?php echo $producto['categoria_id']['nombre']; ?></td>
+                                                        <td><?php echo $producto['subcategoria_id']['nombre']; ?></td>
+                                                        <td><?php echo $producto['nombre']; ?></td>
+                                                        <td><?php echo $producto['descripcion']; ?></td>
+                                                        <td><?php echo $producto['foto']; ?></td>
+                                                        <td><?php echo $producto['estatus']; ?></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <div class="btn-group align-top">
+                                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="modal" data-target="#user-form-modal">Edit</button>
+                                                                <button class="btn btn-sm btn-outline-secondary deactivate-product" type="button" data-id="<?php echo $producto['producto_id']; ?>"><i class="fa fa-trash"></i></button>
 
-                                                <tr>
-
-                                                    <td class="align-middle">
-                                                        <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                                            <input type="checkbox" class="custom-control-input" id="item-1">
-                                                            <label class="custom-control-label" for="item-1"></label>
-                                                        </div>
-                                                    </td>
-
-
-                                                    <td class="align-middle text-center">
-                                                        <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <script>
-                                                            // Obtiene los datos de productos desde PHP y los convierte en una variable JavaScript
-                                                            var productos = <?php echo $productos; ?>;
-                                                        </script>
-
-                                                    <td class="text-center align-middle"><i class="fa fa-fw text-secondary cursor-pointer fa-toggle-off"></i>
-                                                    </td>
-                                                    <td class="text-center align-middle">
-                                                        <div class="btn-group align-top">
-                                                            <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#user-form-modal">Edit</button>
-                                                            <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                                                        </div>
-                                                    </td>
-                                                    </td>
-
-                                                </tr>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -119,7 +141,7 @@ $productos = Producto::getAllByJson();
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-3 mb-3">
+                    <div class="flex-column col-12 col-lg-3 mb-3">
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center px-xl-3">
@@ -129,10 +151,8 @@ $productos = Producto::getAllByJson();
                                 <div class="e-navlist e-navlist--active-bold">
                                     <ul class="nav">
                                         <li class="nav-item active"><a href class="nav-link"><span>Mostrar Todos</span>&nbsp;<small>/&nbsp;32</small></a></li>
-                                        <li class="nav-item"><a href class="nav-link"><span>Activos</span>&nbsp;<small>/&nbsp;16</small></a>
-                                        </li>
-                                        <li class="nav-item"><a href class="nav-link"><span>Seleccionados</span>&nbsp;<small>/&nbsp;0</small></a>
-                                        </li>
+                                        <li class="nav-item"><a href class="nav-link"><span>Activos</span>&nbsp;<small>/&nbsp;16</small></a></li>
+                                        <li class="nav-item"><a href class="nav-link"><span>Seleccionados</span>&nbsp;<small>/&nbsp;0</small></a></li>
                                     </ul>
                                 </div>
                                 <hr class="my-3">
@@ -145,12 +165,11 @@ $productos = Producto::getAllByJson();
                                     </div>
                                     <div class="form-group">
                                         <label>Busqueda por nombre:</label>
-                                        <div><input class="form-control w-100" type="text" placeholder="Name" value>
-                                        </div>
+                                        <div><input class="form-control w-100" type="text" placeholder="Name" value></div>
                                     </div>
                                 </div>
                                 <hr class="my-3">
-                                <div class>
+                                <div>
                                     <label>Estatus:</label>
                                     <div class="px-2">
                                         <div class="custom-control custom-radio">
@@ -175,7 +194,6 @@ $productos = Producto::getAllByJson();
                         </div>
                     </div>
                 </div>
-
                 <div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -252,7 +270,7 @@ $productos = Producto::getAllByJson();
                                                 <div class="mb-2"><b>Keeping in Touch</b></div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label>Email Notifications</label>
+                                                        z <label>Email Notifications</label>
                                                         <div class="custom-controls-stacked px-2">
                                                             <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="notifications-blog" checked>
@@ -285,6 +303,7 @@ $productos = Producto::getAllByJson();
             </div>
         </div>
     </div>
+
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
