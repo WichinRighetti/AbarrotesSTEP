@@ -6,10 +6,11 @@
     <title>AppStock</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/productos.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="js/productos.js"></script>
+    <script src="js/eliminar.js"></script>
+    <script src="js/selector.js"></script>
 
     <style>
         /* Estilos de Flexbox */
@@ -38,13 +39,11 @@
         }
     </style>
 
-</head>
+    <?php
+    require_once('models/Producto.php');
+    $productos = Producto::getAllByJson();
 
-<?php
-require_once('models/Producto.php');
-$productos = Producto::getAllByJson();
-
-?>
+    ?>
 
 <body>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,8 +116,8 @@ $productos = Producto::getAllByJson();
                                                         <td>
                                                             <div class="btn-group align-top">
                                                                 <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="modal" data-target="#user-form-modal">Edit</button>
-                                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-id="<?php echo $producto['producto_id']; ?>"><i class="fa fa-trash"></i></button>
-                                                            </div>
+                                                                <button class="btn btn-sm btn-outline-secondary deactivate-product" type="button" data-id="<?php echo $producto['producto_id']; ?>"><i class="fa fa-trash"></i></button>
+
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>

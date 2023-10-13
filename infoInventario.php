@@ -6,41 +6,50 @@
     <title>AppStock - Inventario</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/productos.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/inventario.js"></script>
+    <script src="js/selector.js"></script>
+    <script src="js/producto.js"></script>
+    <script src="js/inventario.js"></script>
 
-    <style>
-        /* Estilos de Flexbox */
-        .container-fluid {
-            display: flex;
-            flex-wrap: wrap;
-        }
 
-        .sidebar {
-            flex: 0 0 200px;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .row.flex-lg-nowrap {
-            flex-wrap: nowrap;
-        }
-
-        .flex-column {
-            flex: 1;
-            margin-right: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
+
+<style>
+    /* Estilos de Flexbox */
+    .container-fluid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .sidebar {
+        flex: 0 0 200px;
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .row.flex-lg-nowrap {
+        flex-wrap: nowrap;
+    }
+
+    .flex-column {
+        flex: 1;
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+</style>
 
 <?php
 require_once('models/inventario.php');
+require_once('models/entrada.php');
+require_once('models/salida.php');
 
+
+$inventarioList = Inventario::getAll();
 ?>
 
 <body>
@@ -205,7 +214,8 @@ require_once('models/inventario.php');
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="entrada-form">
+                                <form id="entrada-form" method="POST" action="models/entrada.php">
+                                    <!-- Campos para agregar entrada -->
                                     <div class="form-group">
                                         <label for="fecha-entrada">Fecha de Entrada</label>
                                         <input type="date" class="form-control" id="fecha-entrada" name="fecha-entrada">
@@ -214,12 +224,12 @@ require_once('models/inventario.php');
                                         <label for="cantidad-entrada">Cantidad de Entrada</label>
                                         <input type="number" class="form-control" id="cantidad-entrada" name="cantidad-entrada">
                                     </div>
-                                    <!-- Otros campos relacionados con la entrada -->
+                                    <input type="hidden" id="inventario-id" name="inventario-id" value="<?php echo $inventario->getInventario_id(); ?>">
+                                    <button type="submit" name="entrada_id" class="btn btn-success">Guardar Entrada
+
+
+                                    </button>
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-success">Guardar Entrada</button>
                             </div>
                         </div>
                     </div>
@@ -236,7 +246,8 @@ require_once('models/inventario.php');
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="salida-form">
+                                <form id="salida-form" method="POST" action="models/salida.php">
+                                    <!-- Campos para agregar salida -->
                                     <div class="form-group">
                                         <label for="fecha-salida">Fecha de Salida</label>
                                         <input type="date" class="form-control" id="fecha-salida" name="fecha-salida">
@@ -245,12 +256,9 @@ require_once('models/inventario.php');
                                         <label for="cantidad-salida">Cantidad de Salida</label>
                                         <input type="number" class="form-control" id="cantidad-salida" name="cantidad-salida">
                                     </div>
-                                    <!-- Otros campos relacionados con la salida -->
+                                    <input type="hidden" id="inventario-id" name="inventario-id" value="<?php echo $inventario->getInventario_id(); ?>">
+                                    <button type="submit" name="salida_id" class="btn btn-success">Guardar Salida</button>
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-danger">Guardar Salida</button>
                             </div>
                         </div>
                     </div>

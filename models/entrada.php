@@ -151,5 +151,25 @@
             //return list
             return json_encode($list);
         }
+
+        //add
+        public function add()
+        {
+            //get connection
+            $connection = MysqlConnection::getConnection();
+            //query
+            $query = "Insert Into entrada (inventario_id, cantidad, fecha) Values(?, ?, ?)";
+            //command
+            $command = $connection->prepare($query);
+            //bin parameter
+            $command->bind_param('iis', $this->inventario->getInventario_id(), $this->cantidad, $this->fecha);
+            //execute
+            $result = $command->execute();
+            //close command
+            mysqli_stmt_close($command);
+            //close connection
+            $connection->close();
+            //retun result
+            return $result;
+        }
     }
-?>
