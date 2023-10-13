@@ -26,7 +26,7 @@ class Producto
     {
         $this->producto_id = $value;
     }
-
+    
     public function getCategoriaId()
     {
         return $this->categoria;
@@ -85,19 +85,19 @@ class Producto
     public function __construct()
     {
         //empty constructors
-        if (func_num_args() == 0) {
-            $this->producto_id = 0;
-            $this->categoria = new Categoria();
-            $this->subcategoria = new Subcategoria();
-            $this->nombre = "";
-            $this->descripcion = "";
-            $this->foto = "";
-            $this->estatus = 1;
+        if (func_num_args()==0){
+            $this-> producto_id = 0;
+            $this-> categoria = new Categoria();
+            $this-> subcategoria = new Subcategoria();
+            $this-> nombre = "";
+            $this-> descripcion = "";
+            $this-> foto = "";
+            $this-> estatus = 1;
         }
         //constructor with data from database
-        if (func_num_args() == 1) {
+        if(func_num_args()==1){
             //get id
-            $producto_id = func_get_arg(0);
+            $producto_id= func_get_arg(0);
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
@@ -111,29 +111,18 @@ class Producto
             //execute
             $command->execute();
             //bind result
-            $command->bind_result(
-                $producto_id,
-                $categoria_id,
-                $categoriaNombre,
-                $categoriaEstatus,
-                $subcategoria_id,
-                $subcategoriaNombre,
-                $subcategoriaEstatus,
-                $nombre,
-                $descripcion,
-                $foto,
-                $estatus
-            );
+            $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+            $foto, $estatus);
             //record was found
-            if ($command->fetch()) {
+            if($command->fetch()){
                 $this->producto_id = $producto_id;
-                $this->categoria = new Categoria($categoria_id, $categoriaNombre, $categoriaEstatus);
-                $this->subcategoria = new subcategoria($subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus);
+                $this->categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+                $this->subcategoria = new subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
                 $this->nombre = $nombre;
                 $this->descripcion = $descripcion;
                 $this->foto = $foto;
                 $this->estatus = $estatus;
-            } else {
+            }else{
                 //throw exception if record not found
                 throw new RecordNotFoundException($producto_id);
             }
@@ -143,7 +132,7 @@ class Producto
             $connection->close();
         }
         //constructor with data from arguments
-        if (func_num_args() == 7) {
+        if(func_num_args() == 7){
             //get arguments
             $arguments = func_get_args();
             //pass arguments to attributes
@@ -169,7 +158,6 @@ class Producto
                     'nombre' => $this->nombre,
                     'descripcion' => $this->descripcion,
                     'foto' => $this->foto,
-
                     'estatus' => $this->estatus)
             );
         }else{
@@ -195,33 +183,15 @@ class Producto
         //execute
         $command->execute();
         //bind results
-        $command->bind_result(
-            $producto_id,
-            $categoria_id,
-            $categoriaNombre,
-            $categoriaEstatus,
-            $subcategoria_id,
-            $subcategoriaNombre,
-            $subcategoriaEstatus,
-            $nombre,
-            $descripcion,
-            $foto,
-            $estatus
-        );
+        $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+        $foto, $estatus);
         //record was found
         //fetch data
-        while ($command->fetch()) {
-            $categoria = new Categoria($categoria_id, $categoriaNombre, $categoriaEstatus);
-            $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus);
-            array_push($records, new Producto(
-                $producto_id,
-                $categoria,
-                $subcategoria,
-                $nombre,
-                $descripcion,
-                $foto,
-                $estatus
-            ));
+        while($command->fetch()){
+            $categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+            $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
+            array_push($records, new Producto($producto_id, $categoria, $subcategoria, $nombre, $descripcion, 
+            $foto, $estatus));
         }
         //close command
         mysqli_stmt_close($command);
@@ -339,7 +309,6 @@ class Producto
         return $result;
     }
 
-
     function delete(){
         $connection = MysqlConnection::getConnection();
         $query = "Update producto set estatus = 0 where producto_id = ?";
@@ -353,3 +322,4 @@ class Producto
         return $result;
     }
 }
+?>
