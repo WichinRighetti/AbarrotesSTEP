@@ -36,7 +36,7 @@
                 //get connection
                 $connection = MysqlConnection::getConnection();
                 //query
-                $query = "select almacen_id, nombre, despcripcion, direccion from almacen where almacen_id = ?";
+                $query = "select almacen_id, nombre, descripcion, direccion from almacen where almacen_id = ?";
                 //command
                 $command = $connection->prepare($query);
                 //bind parameter
@@ -90,7 +90,7 @@
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
-            $query = "select almacen_id, nombre, despcripcion, direccion from almacen";
+            $query = "select almacen_id, nombre, descripcion, direccion from almacen";
             //command
             $command = $connection->prepare($query);
             //execute

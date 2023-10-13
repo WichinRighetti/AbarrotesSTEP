@@ -73,7 +73,7 @@
         //represent the object in JSON format
         public function toJson(){
             return json_encode(array(
-                'subcategoria_id' => $this->categoria_id,
+                'categoria_id' => $this->categoria_id,
                 'nombre' => $this->nombre,
                 'estatus' => $this->estatus
             ));

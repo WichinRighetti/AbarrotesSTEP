@@ -160,7 +160,7 @@ class Producto
     //represent object in JSON format
     public function toJson()
     {
-        if ($this->estatus == '1') {
+        if($this->estatus=='1'){            
             return json_encode(
                 array(
                     'producto_id' => $this->producto_id,
@@ -169,14 +169,13 @@ class Producto
                     'nombre' => $this->nombre,
                     'descripcion' => $this->descripcion,
                     'foto' => $this->foto,
-                    'estatus' => $this->estatus
-                )
+
+                    'estatus' => $this->estatus)
             );
-        } else {
+        }else{
             return json_encode(
                 array(
-                    'message' => 'Producto inexistente'
-                )
+                    'message' => 'Producto inexistente')
             );
         }
     }
@@ -235,19 +234,18 @@ class Producto
     //represent object in JSON format
     public static function getAllByJson()
     {
-        //list
-        $list = array();
-        //get all
-        foreach (self::getAll() as $record) {
-            array_push($list, json_decode($record->toJson(), true)); // Agrega true para decodificar como array asociativo (seccion Modificada)
-        }
-        //return list
-        return $list; // Devuelve el array en lugar de codificarlo nuevamente como JSON (seccion modificada)
+    //list
+    $list = array();
+    //get all
+    foreach(self::getAll() as $record){
+        array_push($list, json_decode($record->toJson()));
+    }
+    //return list
+    return json_encode($list);
     }
 
     //get all by categoria
-    public static function getAllByFilter($Filter)
-    {
+    public static function getAllByFilter($Filter){
         //list
         $list = array();
         $filterValue = array();
@@ -261,12 +259,12 @@ class Producto
         LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id
         where ';
 
-        foreach ($Filter as $category => $element) {
+        foreach($Filter as $category => $element){
             $query .= "$category ";
-            if ($category == "p.nombre") {
+            if( $category == "p.nombre"){
                 $query .= "like ? and ";
                 $types .= 's';
-            } else {
+            }else{
                 $query .= "= ? and ";
                 $types .= 'i';
             }
@@ -275,63 +273,44 @@ class Producto
         $query .= "p.estatus = 1; ";
         //command
         $command = $connection->prepare($query);
-
+        
         //bind param
         echo $Filter[0];
-        if (count($Filter) == 3) {
+        if(count($Filter) == 3){
             $command->bind_param($types, $filterValue[0], $filterValue[1], $filterValue[2]);
-        } else if (count($Filter) == 2) {
+        }else if(count($Filter) == 2){
             $command->bind_param($types, $filterValue[0], $filterValue[1]);
-        } else {
+        }else{
             $command->bind_param($types, $filterValue[0]);
         }
 
         //execute 
         $command->execute();
-        //bind results
-        $command->bind_result(
-            $producto_id,
-            $categoria_id,
-            $categoriaNombre,
-            $categoriaEstatus,
-            $subcategoria_id,
-            $subcategoriaNombre,
-            $subcategoriaEstatus,
-            $nombre,
-            $descripcion,
-            $foto,
-            $estatus
-        );
-        //record was found
-        //fetch data
-        while ($command->fetch()) {
-            $categoria = new Categoria($categoria_id, $categoriaNombre, $categoriaEstatus);
-            $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus);
-            array_push($list, new Producto(
-                $producto_id,
-                $categoria,
-                $subcategoria,
-                $nombre,
-                $descripcion,
-                $foto,
-                $estatus
-            ));
-        }
-        //close command
-        mysqli_stmt_close($command);
-        //close connection
-        $connection->close();
-        //Return records
-        return $list;
+       //bind results
+       $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+       $foto, $estatus);
+       //record was found
+       //fetch data
+       while($command->fetch()){
+           $categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+           $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
+           array_push($list, new Producto($producto_id, $categoria, $subcategoria, $nombre, $descripcion, 
+           $foto, $estatus));
+       }
+       //close command
+       mysqli_stmt_close($command);
+       //close connection
+       $connection->close();
+       //Return records
+       return $list;
     }
 
     //get all json by Categoria
-    public static function getAllByJsonByFilter($Filter)
-    {
+    public static function getAllByJsonByFilter($Filter){
         //list
         $list = array();
         //get all
-        foreach (self::getAllByFilter($Filter) as $item) {
+        foreach(self::getAllByFilter($Filter) as $item){
             array_push($list, json_decode($item->toJson()));
         }
 
@@ -348,14 +327,8 @@ class Producto
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param(
-            'iisss',
-            $this->categoria,
-            $this->subcategoria,
-            $this->nombre,
-            $this->descripcion,
-            $this->foto
-        );
+        $command->bind_param('iisss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $this->descripcion, $this->foto);
         //execute
         $result = $command->execute();
         //close command
@@ -366,8 +339,8 @@ class Producto
         return $result;
     }
 
-    function delete()
-    {
+
+    function delete(){
         $connection = MysqlConnection::getConnection();
         $query = "Update producto set estatus = 0 where producto_id = ?";
         //command 
