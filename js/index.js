@@ -183,6 +183,13 @@ function showCategories(data){
     var JSONData = JSON.parse(data);
     //get brands array
     var categorias = JSONData.categoria;
+
+    var optionDefault = document.createElement('option');
+    optionDefault.value = 0;
+    optionDefault.innerHTML= "Categoria";
+
+    select.appendChild(optionDefault);
+
     //read data
     for(var i = 0;i<categorias.length;i++){
         //console.log(categorias[i].categoria_id);
@@ -219,6 +226,13 @@ function showSubcategories(data){
     var JSONData = JSON.parse(data);
     //get brands array
     var subcategorias = JSONData.subcategoria;
+
+    var optionDefault = document.createElement('option');
+    optionDefault.value = 0;
+    optionDefault.innerHTML= "Subcategoria";
+
+    select.appendChild(optionDefault);
+
     //read data
     for(var i = 0;i<subcategorias.length;i++){
         //console.log(categorias[i].categoria_id);

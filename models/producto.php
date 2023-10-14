@@ -234,6 +234,7 @@ class Producto
             if( $category == "p.nombre"){
                 $query .= "like ? and ";
                 $types .= 's';
+                $element.="%";
             }else{
                 $query .= "= ? and ";
                 $types .= 'i';
