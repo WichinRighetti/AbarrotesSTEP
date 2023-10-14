@@ -19,7 +19,7 @@ function getProducts() {
 //get products by filter
 function getProductsByFilter() {
     var first = true;
-    var url = "http://localhost/abarrotesStep/controllers/productoController.php?"
+    var url = "http://localhost/abarrotesStep/controllers/productoController.php"
 
     //selects
     var selectCategoria = document.getElementById('slcCategoria');
@@ -27,19 +27,26 @@ function getProductsByFilter() {
     var txtNombre =document.getElementById("txtNombre");
 
     if(selectCategoria.value != 0){
+        if(first){
+            url+='?';
+        }
         url+="categoria_id="+selectCategoria.value;
         first = false;
     }
     if(selectSubcategoria.value != 0){
         if(!first){
-            url+="&";
+            url+='&';
+        }else{
+            url+='?';
         }
         url+="subcategoria_id="+selectSubcategoria.value;
         first = false;
     }
     if(txtNombre.value != ""){
         if(!first){
-            url+="&";
+            url+='&';
+        }else{
+            url+='?';
         }
         url+="nombre="+txtNombre.value;
         first = false;
@@ -112,7 +119,6 @@ function showProducts(data) {
         td6.innerHTML = products[i]['estatus'];
 
         var td7 = document.createElement("td");
-        td7.innerHTML = "Soy ajeno";
 
         var td8 = document.createElement("td");
 
@@ -127,6 +133,7 @@ function showProducts(data) {
         var button2 = document.createElement('input');
         button2.className = "btn btn-sm btn-outline-secondary deactivate-product";
         button2.type = "button";
+        button2.setAttribute('onclick', 'deleteByProduct_Id('+ products[i].producto_id +')')
 
         var icon = document.createElement("span");
         icon.className = "fa fa-trash";//buscar icono y agregar manual
@@ -242,5 +249,30 @@ function showSubcategories(data){
         option.innerHTML=subcategorias[i].nombre;
 
         select.appendChild(option);
+    }
+}
+
+function deleteByProduct_Id(id){
+    //console request
+    var x = new XMLHttpRequest();
+    var fd = new FormData();
+    //prepare request
+    x.open('POST', 'http://localhost/abarrotesStep/controllers/productoController.php', true);
+    fd.append('idDelete', id)
+    //send request
+    x.send(fd);
+    //handle ready state change event
+    x.onreadystatechange = function () {
+        if (x.status == 200 && x.readyState == 4) {
+            //parse yo json
+            var JSONData = JSON.parse(x.responseText);
+            //check status
+            if(JSONData.status == 0){
+                alert(JSONData.message);
+                getProductsByFilter();
+            }else{
+                alert(JSONData.errorMessage);
+            }
+        }
     }
 }
