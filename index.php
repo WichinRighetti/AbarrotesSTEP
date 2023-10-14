@@ -11,6 +11,7 @@
     <script src="js/productos.js"></script>
     <script src="js/eliminar.js"></script>
     <script src="js/selector.js"></script>
+    <script src="js/index.js"></script>
 
     <style>
         /* Estilos de Flexbox */
@@ -41,11 +42,10 @@
 
     <?php
     require_once('models/Producto.php');
-    $productos = Producto::getAllByJson();
-
+    $productos = json_decode(Producto::getAllByJson(), true);
     ?>
 
-<body>
+<body onload="getProducts(), getCategories(), getSubcategories()">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="container-fluid">
         <div class="row flex-lg-nowrap">
@@ -158,14 +158,16 @@
                                 <hr class="my-3">
                                 <div>
                                     <div class="form-group">
-                                        <label>Fecha de - a:</label>
-                                        <div>
-                                            <input id="dates-range" class="form-control flatpickr-input" placeholder="01 Dec 17 - 27 Jan 18" type="text" readonly="readonly">
-                                        </div>
+                                        <label>Categoria:</label>
+                                        <div><select class="form-control w-100" id="slcCategoria" onchange="getProductsByFilter()"></select></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Subategoria:</label>
+                                        <div><select class="form-control w-100" id="slcSubcategoria" onchange="getProductsByFilter()"></select></div>
                                     </div>
                                     <div class="form-group">
                                         <label>Busqueda por nombre:</label>
-                                        <div><input class="form-control w-100" type="text" placeholder="Name" value></div>
+                                        <div><input class="form-control w-100" type="text" placeholder="Name" id="txtNombre" onchange="getProductsByFilter()"></div>
                                     </div>
                                 </div>
                                 <hr class="my-3">
