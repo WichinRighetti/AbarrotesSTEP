@@ -81,8 +81,13 @@ $productos = Producto::getAllByJson();
                                     <h6 class="mr-2"><span>Productos</span></h6>
                                 </div>
                                 <!-- Tabla -->
+<<<<<<< Updated upstream
                                 <div id="contenedor" class="e-table">
                                     <div class="table-responsive mt-3">
+=======
+                                <div class="e-table">
+                                    <div id="contenedor" class="table-responsive mt-3">
+>>>>>>> Stashed changes
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
