@@ -245,7 +245,6 @@ class Producto
         $command = $connection->prepare($query);
         
         //bind param
-        echo $Filter[0];
         if(count($Filter) == 3){
             $command->bind_param($types, $filterValue[0], $filterValue[1], $filterValue[2]);
         }else if(count($Filter) == 2){
