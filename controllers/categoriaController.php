@@ -17,7 +17,7 @@
                 //Display
                 echo json_encode(array(
                     'status' => 0,
-                    'state' => json_decode($c->toJson())
+                    'categoria' => json_decode($c->toJson())
                 ));
             }catch(RecordNotFoundException $ex){
                 echo json_encode(array(
@@ -29,7 +29,7 @@
             //Display
             echo json_encode(array(
                 'status' => 0,
-                'state' => json_decode(Categoria::getAllByJson())
+                'categoria' => json_decode(Categoria::getAllByJson())
             ));
         }
     }
