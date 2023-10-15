@@ -234,6 +234,7 @@ class Producto
             if( $category == "p.nombre"){
                 $query .= "like ? and ";
                 $types .= 's';
+                $element.="%";
             }else{
                 $query .= "= ? and ";
                 $types .= 'i';
@@ -245,7 +246,6 @@ class Producto
         $command = $connection->prepare($query);
         
         //bind param
-        echo $Filter[0];
         if(count($Filter) == 3){
             $command->bind_param($types, $filterValue[0], $filterValue[1], $filterValue[2]);
         }else if(count($Filter) == 2){
