@@ -12,6 +12,8 @@
     <script src="js/selector.js"></script>
     <script src="js/producto.js"></script>
     <script src="js/inventario.js"></script>
+    <script src="js/infoInventario.js"></script>
+    
 
 
 </head>
@@ -52,7 +54,7 @@ require_once('models/salida.php');
 $inventarioList = Inventario::getAll();
 ?>
 
-<body>
+<body onload="getInventary(), getCategories(), getSubcategories()">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="container-fluid">
         <div class="row flex-lg-nowrap">
@@ -103,7 +105,7 @@ $inventarioList = Inventario::getAll();
 
                                                 </tr>
                                             </thead>
-                                            <tbody id="inventario-table-body">
+                                            <tbody id="inventary-table-body">
                                                 <?php
 
                                                 $inventarioList = Inventario::getAll();
@@ -116,13 +118,13 @@ $inventarioList = Inventario::getAll();
                                                     echo "<label class='custom-control-label' for='item-" . $inventario->getInventario_id() . "'></label>";
                                                     echo "</div>";
                                                     echo "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getAlmacen_id()->getNombre() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getProductoId() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getCategoriaId()->getNombre() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getSubcategoriaId()->getNombre() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getNombre() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getDescripcion() . "</td>";
-                                                    echo "<td scope='col'>" . $inventario->getProducto_id()->getFoto() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getAlmacen()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto()->getProductoId() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto()->getCategoriaId()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto()->getSubcategoriaId()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto()->getNombre() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto()->getDescripcion() . "</td>";
+                                                    echo "<td scope='col'>" . $inventario->getProducto()->getFoto() . "</td>";
                                                     echo "<td scope='col'>" . $inventario->getCantidad() . "</td>";
                                                     echo "<td scope='col'>Nivel</td>";
                                                     echo "</tr>";
@@ -165,15 +167,17 @@ $inventarioList = Inventario::getAll();
                                 </div>
                                 <hr class="my-3">
                                 <div>
+                                <div class="form-group">
+                                        <label>Categoria:</label>
+                                        <div><select class="form-control w-100" id="slcCategoria" onchange="getInventaryByFilter()"></select></div>
+                                    </div>
                                     <div class="form-group">
-                                        <label>Fecha de - a:</label>
-                                        <div>
-                                            <input id="dates-range" class="form-control flatpickr-input" placeholder="01 Dec 17 - 27 Jan 18" type="text" readonly="readonly">
-                                        </div>
+                                        <label>Subategoria:</label>
+                                        <div><select class="form-control w-100" id="slcSubcategoria" onchange="getInventaryByFilter()"></select></div>
                                     </div>
                                     <div class="form-group">
                                         <label>Busqueda por nombre:</label>
-                                        <div><input class="form-control w-100" type="text" placeholder="Name" value></div>
+                                        <div><input class="form-control w-100" type="text" placeholder="Name" id="txtNombre"></div>
                                     </div>
                                 </div>
                                 <hr class="my-3">
