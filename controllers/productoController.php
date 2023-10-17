@@ -17,7 +17,7 @@
                 //Display
                 echo json_encode(array(
                     'status' => 0,
-                    'state' => json_decode($p->toJson())
+                    'producto' => json_decode($p->toJson())
                 ));
             }catch(RecordNotFoundException $ex){
                 echo json_encode(array(
@@ -54,7 +54,7 @@
                 //Display
                 echo json_encode(array(
                     'status' => 0,
-                    'state' => json_decode(Producto::getAllByJsonByFilter($Filter))
+                    'producto' => json_decode(Producto::getAllByJsonByFilter($Filter))
                 ));
             }else{
                 echo json_encode(array(
@@ -66,7 +66,7 @@
         }else{
             echo json_encode(array(
                 'status' => 0,
-                'state' => json_decode(Producto::getAllByJson())
+                'producto' => json_decode(Producto::getAllByJson())
             ));
         }
     }
