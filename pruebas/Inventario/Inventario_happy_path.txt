@@ -1,0 +1,712 @@
+Producto
+
+1 Ver todos los inventarios (){
+    INPUT{
+        GET http://localhost/AbarrotesSTEP/controllers/inventarioController.php
+    }
+
+    OUTPUT{
+        {
+            "status": 0,
+            "inventario": [
+                {
+                    "inventario_id": 13,
+                    "producto": {
+                        "producto_id": 2,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 4,
+                            "nombre": "Salas",
+                            "estatus": 1
+                        },
+                        "nombre": "Sillon individual",
+                        "descripcion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec",
+                        "foto": "http://youtube.com",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 2
+                },
+                {
+                    "inventario_id": 14,
+                    "producto": {
+                        "producto_id": 2,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 4,
+                            "nombre": "Salas",
+                            "estatus": 1
+                        },
+                        "nombre": "Sillon individual",
+                        "descripcion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec",
+                        "foto": "http://youtube.com",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 2
+                },
+                {
+                    "inventario_id": 57,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 6
+                },
+                {
+                    "inventario_id": 58,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 6
+                },
+                {
+                    "inventario_id": 59,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 60,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 61,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 62,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 63,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 64,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 6
+                },
+                {
+                    "inventario_id": 65,
+                    "producto": {
+                        "producto_id": 1,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 5,
+                            "nombre": "Calentones",
+                            "estatus": 1
+                        },
+                        "nombre": "Calenton patio",
+                        "descripcion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio",
+                        "foto": "https://netflix.com",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 1,
+                        "nombre": "Almacen Tijuana",
+                        "descripcion": "ipsum. Curabitur",
+                        "direccion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio"
+                    },
+                    "cantidad": 10
+                }
+            ]
+        }
+    }
+}
+
+2 Agregar un inventario (){
+    INPUT{
+        POST http://localhost/AbarrotesSTEP/controllers/inventarioController.php
+        producto_id:1
+        almacen_id:1
+        cantidad:16
+    }
+
+    OUTPUT{
+        Resultado de add: add{"status":0,"message":"Inventario agregado"}
+    }
+}
+
+3 Ver todos los inventarios con el nuevo producto (){
+    INPUT{
+        GET http://localhost/AbarrotesSTEP/controllers/inventarioController.php
+    }
+
+    OUTPUT{
+        {
+            "status": 0,
+            "inventario": [
+                {
+                    "inventario_id": 13,
+                    "producto": {
+                        "producto_id": 2,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 4,
+                            "nombre": "Salas",
+                            "estatus": 1
+                        },
+                        "nombre": "Sillon individual",
+                        "descripcion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec",
+                        "foto": "http://youtube.com",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 2
+                },
+                {
+                    "inventario_id": 14,
+                    "producto": {
+                        "producto_id": 2,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 4,
+                            "nombre": "Salas",
+                            "estatus": 1
+                        },
+                        "nombre": "Sillon individual",
+                        "descripcion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec",
+                        "foto": "http://youtube.com",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 2
+                },
+                {
+                    "inventario_id": 57,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 6
+                },
+                {
+                    "inventario_id": 58,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 6
+                },
+                {
+                    "inventario_id": 59,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 60,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 61,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 62,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 63,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 30
+                },
+                {
+                    "inventario_id": 64,
+                    "producto": {
+                        "producto_id": 5,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 1,
+                            "nombre": "Sillas",
+                            "estatus": 1
+                        },
+                        "nombre": "madera blanca",
+                        "descripcion": "consequat enim diam vel arcu. Curabitur ut odio vel est",
+                        "foto": "http://zoom.us",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 2,
+                        "nombre": "Almacen Tecate",
+                        "descripcion": "nec ante. Maecenas",
+                        "direccion": "orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec"
+                    },
+                    "cantidad": 6
+                },
+                {
+                    "inventario_id": 65,
+                    "producto": {
+                        "producto_id": 1,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 5,
+                            "nombre": "Calentones",
+                            "estatus": 1
+                        },
+                        "nombre": "Calenton patio",
+                        "descripcion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio",
+                        "foto": "https://netflix.com",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 1,
+                        "nombre": "Almacen Tijuana",
+                        "descripcion": "ipsum. Curabitur",
+                        "direccion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio"
+                    },
+                    "cantidad": 10
+                },
+                {
+                    "inventario_id": 66,
+                    "producto": {
+                        "producto_id": 1,
+                        "categoria_id": {
+                            "categoria_id": 2,
+                            "nombre": "Mobiliario",
+                            "estatus": 1
+                        },
+                        "subcategoria_id": {
+                            "subcategoria_id": 5,
+                            "nombre": "Calentones",
+                            "estatus": 1
+                        },
+                        "nombre": "Calenton patio",
+                        "descripcion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio",
+                        "foto": "https://netflix.com",
+                        "estatus": 1
+                    },
+                    "almacen": {
+                        "amacen_id": 1,
+                        "nombre": "Almacen Tijuana",
+                        "descripcion": "ipsum. Curabitur",
+                        "direccion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio"
+                    },
+                    "cantidad": 16
+                }
+            ]
+        }
+    }
+}
+
+4 Obtener unicamente el inventario nuevo (){
+    INPUT{
+        GET http://localhost/AbarrotesSTEP/controllers/inventarioController.php?inventario_id=66
+    }
+
+    OUTPUT{
+        {
+            "status": 0,
+            "inventario": {
+                "inventario_id": 66,
+                "producto": {
+                    "producto_id": 1,
+                    "categoria_id": {
+                        "categoria_id": 2,
+                        "nombre": "Mobiliario",
+                        "estatus": 1
+                    },
+                    "subcategoria_id": {
+                        "subcategoria_id": 5,
+                        "nombre": "Calentones",
+                        "estatus": 1
+                    },
+                    "nombre": "Calenton patio",
+                    "descripcion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio",
+                    "foto": "https://netflix.com",
+                    "estatus": 1
+                },
+                "almacen": {
+                    "amacen_id": 1,
+                    "nombre": "Almacen Tijuana",
+                    "descripcion": "ipsum. Curabitur",
+                    "direccion": "parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio"
+                },
+                "cantidad": 16
+            }
+        }
+    }
+}
+
+5 Intentar ver un inventario inexistente y recibir una alerta (){
+    INPUT{
+        http://localhost/AbarrotesSTEP/controllers/inventarioController.php?inventario_id=67
+    }
+
+    OUTPUT{
+        {"status":1,"errorMessage":"Record not found"}
+    }
+}

@@ -235,7 +235,7 @@
             //command
             $command = $connection->prepare($query);
             //bin parameter
-            $command->bind_param('iii', $this->producto->getProductoId(), $this->almacen->getAlamacen_id(), $this->cantidad);
+            $command->bind_param('iii', $this->producto, $this->almacen, $this->cantidad);
             //execute
             $result = $command->execute();
             //close command
