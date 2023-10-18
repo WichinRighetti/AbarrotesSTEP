@@ -32,7 +32,41 @@
     }
 
     //POST
-    if($_SERVER['REQUEST_METHOD']=='POST'){
+    
+    if ( isset($_POST['cantidad']) && isset($_POST['producto_id'])) {
+        try {
+            $result = Salida::addWithSP(
+                $_POST['cantidad'],
+                $_POST['producto_id']
+            );
+            $status = 0;
+            //result
+            switch ($result) {
+                case 'SQL Error':
+                    $status = 999;
+                    break;
+                case 'Producto no existe':
+                    $status = 1;
+                    break;
+                case 'OK':
+                    $status = 0;
+                    break;
+            }
+            if ($status == 0) {
+                $result = "Salida Registrada con SP";
+            }
+            //display result 
+            echo json_encode(array(
+                'status' => $status,
+                'message' => $result
+            ));
+        } catch (RecordNotFoundException $ex) {
+            echo json_encode(array(
+                'status' => 1,
+                'errorMessage' => "La salida no se registro"
+            ));
+        }
+    }else if($_SERVER['REQUEST_METHOD']=='POST'){
         if(isset($_POST['inventario_id'], $_POST['cantidad'], $_POST['fecha'])){
             //Error
             $error = false;
@@ -72,4 +106,3 @@
             ));
         }
     }
-

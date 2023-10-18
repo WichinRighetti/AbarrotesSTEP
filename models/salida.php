@@ -169,4 +169,29 @@
             //retun result
             return $result;
         }
+
+        public static function addWithSP($cantidad, $producto_id){
+            $connection = MysqlConnection::getConnection();
+            if($connection){
+                $query = "Call spSalida('$cantidad', '$producto_id');
+                Select @result";
+                //prepare status 
+                $dataSet = $connection->multi_query($query);
+                if($dataSet){
+                    do{
+                        if($result = $connection->store_result()){
+                            while($row = $result->fetch_row()){
+                                foreach($row as $cell){
+                                    $procedureResult = $cell;
+                                }
+                            }
+                        }
+                    }
+                    while($connection->next_result());
+                }
+                $connection->close();
+            }
+            //return result from SP
+            return $procedureResult;
+       }
     }
