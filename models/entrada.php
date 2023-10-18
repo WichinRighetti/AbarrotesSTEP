@@ -173,10 +173,10 @@
             return $result;
         }
 
-        public static function addWithSP($cantidad, $producto_id){
+        public static function addWithSP($cantidad, $inventario_id){
             $connection = MysqlConnection::getConnection();
             if($connection){
-                $query = "Call spEntrada('$cantidad', '$producto_id');
+                $query = "Call spEntrada('$cantidad', '$inventario_id');
                 Select @result";
                 //prepare status 
                 $dataSet = $connection->multi_query($query);

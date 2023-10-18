@@ -32,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 //POST
-if ( isset($_POST['cantidad']) && isset($_POST['producto_id'])) {
+if ( isset($_POST['cantidad']) && isset($_POST['inventario_id'])) {
     try {
         $result = Entrada::addWithSP(
             $_POST['cantidad'],
-            $_POST['producto_id']
+            $_POST['inventario_id']
         );
         $status = 0;
         //result
