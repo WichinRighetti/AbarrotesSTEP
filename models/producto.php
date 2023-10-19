@@ -1,58 +1,62 @@
 <?php
-//use files
-require_once('mysqlConnection.php');
-require_once('exceptions/recordNotFoundException.php');
-require_once('categoria.php');
-require_once('subcategoria.php');
+    //use files
+    require_once('mysqlConnection.php');
+    require_once('exceptions/recordNotFoundException.php');
+    require_once('categoria.php');
+    require_once('subcategoria.php');
 
-//classs name
-class Producto
-{
-    //Atributes
-    private $producto_id;
-    private $categoria;
-    private $subcategoria;
-    private $nombre;
-    private $descripcion;
-    private $foto;
-    private $estatus;
+    //classs name
+    class Producto
+    {
+        //Atributes
+        private $producto_id;
+        private $categoria;
+        private $subcategoria;
+        private $nombre;
+        private $descripcion;
+        private $foto;
+        private $estatus;
 
-    //getters and setters
-    public function getProductoId()
-    {
-        return $this->producto_id;
-    }
-    public function setProductoId($value)
-    {
-        $this->producto_id = $value;
-    }
+        //getters and setters
+        public function getProductoId()
+        {
+            return $this->producto_id;
+        }
+        
+        public function setProductoId($value)
+        {
+            $this->producto_id = $value;
+        }
     
-    public function getCategoriaId()
-    {
-        return $this->categoria;
-    }
-    public function setCategoriaId($value)
-    {
-        $this->categoria = $value;
-    }
+        public function getCategoriaId()
+        {
+            return $this->categoria;
+        }
 
-    public function getSubcategoriaId()
-    {
-        return $this->subcategoria;
-    }
-    public function setSubcategoriaId($value)
-    {
-        $this->subcategoria = $value;
-    }
+        public function setCategoriaId($value)
+        {
+            $this->categoria = $value;
+        }
 
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-    public function setNombre($value)
-    {
-        $this->nombre = $value;
-    }
+        public function getSubcategoriaId()
+        {
+            return $this->subcategoria;
+        }
+    
+        public function setSubcategoriaId($value)
+        {
+            $this->subcategoria = $value;
+        }
+
+        public function getNombre()
+        {
+            return $this->nombre;
+        }
+    
+        public function setNombre($value)
+        {
+            $this->nombre = $value;
+        }
 
     public function getDescripcion()
     {
@@ -67,7 +71,7 @@ class Producto
     {
         return $this->foto;
     }
-    public function foto($value)
+    public function setfoto($value)
     {
         $this->foto = $value;
     }
@@ -293,12 +297,33 @@ class Producto
         //get connection
         $connection = MysqlConnection::getConnection();
         //query
-        $query = "Insert Into producto (categoria_id, subcategoria_id, nombre, descripcion, foto) Values(?, ?, ?, ?, ?)";
+        $query = "Insert Into producto (categoria_id, subcategoria_id, nombre, descripcion, foto, estatus) Values(?, ?, ?, ?, ?, ?)";
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param('iisss', $this->categoria, $this->subcategoria, $this->nombre, 
-        $this->descripcion, $this->foto);
+        $command->bind_param('iissss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $this->descripcion, $this->foto, $this->estatus);
+        //execute
+        $result = $command->execute();
+        //close command
+        mysqli_stmt_close($command);
+        //close connection
+        $connection->close();
+        //retun result
+        return $result;
+    }
+
+    public function update()
+    {
+        //get connection
+        $connection = MysqlConnection::getConnection();
+        //query
+        $query = "Update producto set categoria_id = ?, subcategoria_id = ?, nombre = ?, descripcion = ?, foto = ? where producto_id = ?";
+        //command
+        $command = $connection->prepare($query);
+        //bin parameter
+        $command->bind_param('iissss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $this->descripcion, $this->foto, $this->producto_id);
         //execute
         $result = $command->execute();
         //close command
