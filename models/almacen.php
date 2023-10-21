@@ -44,11 +44,11 @@
                 //execute
                 $command->execute();
                 //bind results
-                $command->bind_result($id, $nombre, $descripcion, $direccion);
+                $command->bind_result($almacen_id, $nombre, $descripcion, $direccion);
                 //reconrd was found
                 if($command->fetch()){
                     //pass values to the attributes
-                    $this->almacen_id = $id;
+                    $this->almacen_id = $almacen_id;
                     $this->nombre = $nombre;
                     $this->descripcion = $descripcion;
                     $this->direccion = $direccion;
@@ -76,7 +76,7 @@
         //represent the object in JSON format
         public function toJson(){
             return json_encode(array(
-                'amacen_id'=>$this->almacen_id,
+                'almacen_id'=>$this->almacen_id,
                 'nombre'=>$this->nombre,
                 'descripcion'=>$this->descripcion,
                 'direccion'=>$this->direccion,
@@ -96,10 +96,10 @@
             //execute
             $command->execute();
             //bind results
-            $command->bind_result($id, $nombre, $descripcion, $direccion);
+            $command->bind_result($almacen_id, $nombre, $descripcion, $direccion);
             //fetch data
             while($command->fetch()){
-                array_push($list, new Almacen($id, $nombre, $descripcion, $direccion));
+                array_push($list, new Almacen($almacen_id, $nombre, $descripcion, $direccion));
             }
             //close command
             mysqli_stmt_close($command);
@@ -131,9 +131,9 @@
             //query
             $query = 'select almacen_id, nombre, descripcion, direccion from almacen where ';
 
-            foreach($Filter as $alamcen => $element){
+            foreach($Filter as $almacen => $element){
                 $query .= "$almacen ";
-                if( $category == "nombre"){
+                if( $almacen == "nombre"){
                     $query .= "like ? and ";
                     $types .= 's';
                     $element.="%";
@@ -154,11 +154,11 @@
             //execute 
             $command->execute();
             //bind results
-            $command->bind_result($categoria_id, $nombre, $estatus);
+            $command->bind_result($almacen_id, $nombre, $descripcion, $direccion);
             //record was found
             //fetch data
             while($command->fetch()){
-                array_push($list, new Categoria($categoria_id, $nombre ,$estatus));
+                array_push($list, new Almacen($almacen_id, $nombre ,$descripcion, $direccion));
             }
             //close command
             mysqli_stmt_close($command);
@@ -184,11 +184,11 @@
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
-            $query = "Insert Into categoria (nombre, estatus) Values(?, ?)";
+            $query = "Insert Into almacen (nombre, descripcion, direccion) Values(?, ?, ?)";
             //command
             $command = $connection->prepare($query);
             //bin parameter
-            $command->bind_param('si', $this->nombre, $this->estatus);
+            $command->bind_param('sss', $this->nombre, $this->descripcion, $this->direccion);
             //execute
             $result = $command->execute();
             //close command
@@ -203,11 +203,12 @@
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
-            $query = "Update categoria set nombre = ? where categoria_id = ?";
+            $query = "Update almacen set nombre = ?, descripcion = ?, direccion = ? where almacen_id = ?";
             //command
             $command = $connection->prepare($query);
             //bin parameter
-            $command->bind_param('si', $this->nombre, $this->categoria_id);
+            echo $this->direccion;
+            $command->bind_param('sssi', $this->nombre, $this->descripcion, $this->direccion, $this->almacen_id);
             //execute
             $result = $command->execute();
             //close command
@@ -222,11 +223,11 @@
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
-            $query = "Update categoria set estatus = 0 where categoria_id = ?";
+            $query = "Update almacen set estatus = 0 where almacen_id = ?";
             //command
             $command = $connection->prepare($query);
             //bin parameter
-            $command->bind_param('s', $this->categoria_id);
+            $command->bind_param('s', $this->almacen_id);
             //execute
             $result = $command->execute();
             //close command
