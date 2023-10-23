@@ -116,5 +116,164 @@
             //return list
             return json_encode($list);
         }
+
+        public static function getAllPagina($pagina, $cantidad)
+    {
+        //list of records
+        $records = array();
+        //get connection
+        $connection = MysqlConnection::getConnection();
+        //query
+        $query = "Select subcategoria_id, nombre, estatus From subcategoria LIMIT ?, ?;";
+        //command
+        $command = $connection->prepare($query);
+        //bind parameter
+        $command->bind_param('ii', $pagina, $cantidad);
+        //execute
+        $command->execute();
+        //bind results
+        $command->bind_result($subcategoria_id, $nombre, $estatus);
+        //fetch data
+        while($command->fetch()){
+            array_push($records, new Subcategoria($subcategoria_id, $nombre, $estatus));
+        }
+        //close command
+        mysqli_stmt_close($command);
+        //close connection
+        $connection->close();
+        //Return records
+        return $records;
+    }
+    
+    //represent object in JSON format
+    public static function getAllPaginaByJson($pagina, $cantidad)
+    {
+        //list
+        $list = array();
+        //get all
+        foreach(self::getAllPagina($pagina, $cantidad) as $record){
+            array_push($list, json_decode($record->toJson()));
+        }
+        //return list
+        return json_encode($list);
+    }
+
+        //get all by categoria
+        public static function getAllByFilter($Filter){
+            //list
+            $list = array();
+            $filterValue = array();
+            $types = '';
+            //get connection
+            $connection = MysqlConnection::getConnection();
+            //query
+            $query = 'Select subcategoria_id, nombre, estatus From subcategoria where ';
+
+            foreach($Filter as $subcategory => $element){
+                $query .= "$subcategory ";
+                if( $subcategory == "nombre"){
+                    $query .= "like ? and ";
+                    $types .= 's';
+                    $element.="%";
+                } else{
+                    $query .= "= ? and ";
+                    $types .= 'i';
+                }
+                array_push($filterValue, $element);
+            }
+            $query .= "estatus = 1; ";
+            //command
+            $command = $connection->prepare($query);
+        
+            //bind param
+            if(count($Filter) == 1){
+                $command->bind_param($types, $filterValue[0]);
+            }
+
+            //execute 
+            $command->execute();
+            //bind results
+            $command->bind_result($subcategoria_id, $nombre, $estatus);
+            //record was found
+            //fetch data
+            while($command->fetch()){
+                array_push($list, new Subcategoria($subcategoria_id, $nombre ,$estatus));
+            }
+            //close command
+            mysqli_stmt_close($command);
+            //close connection
+            $connection->close();
+            //Return records
+            return $list;
+        }
+
+        //get all json by Categoria
+        public static function getAllByJsonByFilter($Filter){
+            //list
+            $list = array();
+            //get all
+            foreach(self::getAllByFilter($Filter) as $item){
+                array_push($list, json_decode($item->toJson()));
+            }
+
+            return json_encode($list);
+        }
+
+        public function add(){
+            //get connection
+            $connection = MysqlConnection::getConnection();
+            //query
+            $query = "Insert Into subcategoria (nombre, estatus) Values(?, ?)";
+            //command
+            $command = $connection->prepare($query);
+            //bin parameter
+            $command->bind_param('si', $this->nombre, $this->estatus);
+            //execute
+            $result = $command->execute();
+            //close command
+            mysqli_stmt_close($command);
+            //close connection
+            $connection->close();
+            //retun result
+            return $result;
+        }
+
+        public function update(){
+            //get connection
+            $connection = MysqlConnection::getConnection();
+            //query
+            $query = "Update subcategoria set nombre = ? where subcategoria_id = ?";
+            //command
+            $command = $connection->prepare($query);
+            //bin parameter
+            $command->bind_param('si', $this->nombre, $this->subcategoria_id);
+            //execute
+            $result = $command->execute();
+            //close command
+            mysqli_stmt_close($command);
+            //close connection
+            $connection->close();
+            //retun result
+            return $result;
+        }
+
+        public function delete(){
+            //get connection
+            $connection = MysqlConnection::getConnection();
+            //query
+            $query = "Update subcategoria set estatus = 0 where subcategoria_id = ?";
+            //command
+            $command = $connection->prepare($query);
+            //bin parameter
+            $command->bind_param('s', $this->subcategoria_id);
+            //execute
+            $result = $command->execute();
+            //close command
+            mysqli_stmt_close($command);
+            //close connection
+            $connection->close();
+            //retun result
+            return $result;
+        }
     }
 ?>

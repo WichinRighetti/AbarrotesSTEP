@@ -1,50 +1,30 @@
 <?php
-//Alow acces from outside the server
-header('Access-Control-Allow-origin: *');
-//Allow methods
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE'); //Read, inster, update, delete
+    //Alow acces from outside the server
+    header('Access-Control-Allow-origin: *');
+    //Allow methods
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE'); //Read, inster, update, delete
 
     require_once($_SERVER['DOCUMENT_ROOT'].'/AbarrotesSTEP/models/producto.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/AbarrotesSTEP/models/categoria.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/AbarrotesSTEP/models/subcategoria.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/AbarrotesSTEP/models/exceptions/recordNotFoundException.php');
 
-
-//GET read
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    //Parameter
-    if (isset($_GET['producto_id'])) {
-        try {
-            $p = new Producto($_GET['producto_id']);
-            //Display
-            echo json_encode(array(
-                'status' => 0,
-                'state' => json_decode($p->toJson())
-            ));
-        } catch (RecordNotFoundException $ex) {
-            echo json_encode(array(
-                'status' => 1,
-                'errorMessage' => $ex->get_message()
-            ));
-        }
-    } else if (isset($_GET['categoria_id']) || isset($_GET['subcategoria_id']) || isset($_GET['nombre'])) {
-        $Filter = array();
-        $errorMsg = "";
-        $error = false;
-        if (isset($_GET['categoria_id'])) {
-            try {
-                $c = new Categoria($_GET['categoria_id']);
-            } catch (RecordNotFOundException $ex) {
-                $errorMsg .= "\n Categoria not found";
-                $error = true;
-            }
-            $Filter["c.categoria_id"] = $_GET['categoria_id'];
-        }
-        if (isset($_GET['subcategoria_id'])) {
-            try {
-                $s = new Subcategoria($_GET['subcategoria_id']);
-            } catch (RecordNotFOundException $ex) {
-                $errorMsg .= "\n Subcategoria not found";
-                $error = true;
+    //GET read
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+        //Parameter
+        if(isset($_GET['producto_id'])){
+            try{
+                $producto = new Producto($_GET['producto_id']);
+                //Display
+                echo json_encode(array(
+                    'status' => 0,
+                    'producto' => json_decode($producto->toJson())
+                ));
+            }catch(RecordNotFoundException $ex){
+                echo json_encode(array(
+                    'status' => 1,
+                    'errorMessage' => $ex->get_message()
+                ));
             }
         }else if(isset($_GET['categoria_id']) || isset($_GET['subcategoria_id']) || isset($_GET['nombre'])){
             $Filter = array();
@@ -75,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 //Display
                 echo json_encode(array(
                     'status' => 0,
-                    'state' => json_decode(Producto::getAllByJsonByFilter($Filter))
+                    'producto' => json_decode(Producto::getAllByJsonByFilter($Filter))
                 ));
             }else{
                 echo json_encode(array(
@@ -84,44 +64,69 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 ));
             }
             
-        }else{
+        } else{
             echo json_encode(array(
                 'status' => 0,
-                'state' => json_decode(Producto::getAllByJsonByFilter($Filter))
-            ));
-        } else {
-            echo json_encode(array(
-                'status' => 2,
-                'errorMessage' => $errorMsg
+                'producto' => json_decode(Producto::getAllByJson())
             ));
         }
-    } else {
-        echo json_encode(array(
-            'status' => 0,
-            'state' => json_decode(Producto::getAllByJson())
-        ));
     }
-}
 
 //POST
-
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //check parameters
-    if(!isset($_POST['idDelete']) && isset($_POST['categoria_id']) && isset($_POST['subcategoria_id']) && isset($_POST['nombre']) && isset($_POST['descripcion'])
+    if(isset($_POST['producto_id']) && isset($_POST['categoria']) && isset($_POST['subcategoria']) && isset($_POST['nombre']) && isset($_POST['descripcion'])
     && isset($_POST['foto'])){
-        //error
-        $error = false;
-        if(!$error){
+        
+        $producto_id = $_POST['producto_id'];
+        $categoria = $_POST['categoria'];
+        $subcategoria = $_POST['subcategoria'];
+        $nombre = $_POST['nombre'];
+        $descripcion = $_POST['descripcion'];
+        $foto = $_POST['foto'];
+
+        if ($producto_id >= 1){
+            try{
+                $producto = new Producto($producto_id);
+                $producto->setCategoriaId($_POST['categoria']);
+                $producto->setSubcategoriaId($_POST['subcategoria']);
+                $producto->setNombre($_POST['nombre']);
+                $producto->setDescripcion($_POST['descripcion']);
+                $producto->setFoto($_POST['foto']);
+                if ($producto->update()){
+                    echo json_encode(array(
+                        'status' => 0,
+                        'message' => 'producto editada'
+                    ));
+                }
+            }catch(Exception $e){
+                echo $e;
+            }
+        } else {
             //create an empty obect
-            $p = new Producto();
+            $producto = new Producto();
             //set values
-            $p->setCategoriaId($_POST['categoria_id']);
-            $p->setSubcategoriaId($_POST['subcategoria_id']);
-            $p->setNombre($_POST['nombre']);
-            $p->setDescripcion($_POST['descripcion']);
-            $p->foto($_POST['foto']);
+            $producto->setCategoriaId($_POST['categoria']);
+            $producto->setSubcategoriaId($_POST['subcategoria']);
+            $producto->setNombre($_POST['nombre']);
+            $producto->setDescripcion($_POST['descripcion']);
+            $producto->setFoto($_POST['foto']);
+            $producto->setEstatus(1);
+            try {
+                $productoExistente = new Producto();
+                $productoExistente->getProductByName($_POST['nombre']);
+            }catch(Exception $e){
+                $productoExistente = new Producto();
+            }
+            if ($productoExistente->getNombre() == $producto->getNombre()){
+                echo json_encode(array(
+                    'status' => 3,
+                    'message' => 'El nombre del producto ya existe en la base de datos'
+                ));
+                return;
+            }
             //add
-            if($p->add()){
+            if($producto->add()){
                 echo json_encode(array(
                     'status' => 0,
                     'message' => 'producto agregado'
@@ -131,14 +136,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }else if(isset($_POST['idDelete'])){
 
             try{
-                $p = new Producto($_POST['idDelete']);
+                $producto = new Producto($_POST['idDelete']);
             }catch(RecordNotFoundException $ex){
                 echo json_encode(array(
                     'status' => 2,
                     'errorMessage' => 'Producto ID  no encontrado'
                 ));
                 $error = true;
-            }if($p->delete()){
+            }if($producto->delete()){
                     echo json_encode(array(
                        'status' => 0,
                        'message' => 'Producto eliminado'
@@ -155,5 +160,3 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         ));
     }
 }
-
-

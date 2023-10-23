@@ -5,6 +5,7 @@
     header('Access-Control-Methods: GET, POST, PUT, DELETE');
 
     require_once($_SERVER['DOCUMENT_ROOT'].'/abarrotesStep/models/salida.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/AbarrotesSTEP/models/exceptions/recordNotFoundException.php');
 
     //get (read)
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
