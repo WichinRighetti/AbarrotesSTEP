@@ -1,58 +1,62 @@
 <?php
-//use files
-require_once('mysqlConnection.php');
-require_once('exceptions/recordNotFoundException.php');
-require_once('categoria.php');
-require_once('subcategoria.php');
+    //use files
+    require_once('mysqlConnection.php');
+    require_once('exceptions/recordNotFoundException.php');
+    require_once('categoria.php');
+    require_once('subcategoria.php');
 
-//classs name
-class Producto
-{
-    //Atributes
-    private $producto_id;
-    private $categoria;
-    private $subcategoria;
-    private $nombre;
-    private $descripcion;
-    private $foto;
-    private $estatus;
+    //classs name
+    class Producto
+    {
+        //Atributes
+        private $producto_id;
+        private $categoria;
+        private $subcategoria;
+        private $nombre;
+        private $descripcion;
+        private $foto;
+        private $estatus;
 
-    //getters and setters
-    public function getProductoId()
-    {
-        return $this->producto_id;
-    }
-    public function setProductoId($value)
-    {
-        $this->producto_id = $value;
-    }
+        //getters and setters
+        public function getProductoId()
+        {
+            return $this->producto_id;
+        }
+        
+        public function setProductoId($value)
+        {
+            $this->producto_id = $value;
+        }
+    
+        public function getCategoriaId()
+        {
+            return $this->categoria;
+        }
 
-    public function getCategoriaId()
-    {
-        return $this->categoria;
-    }
-    public function setCategoriaId($value)
-    {
-        $this->categoria = $value;
-    }
+        public function setCategoriaId($value)
+        {
+            $this->categoria = $value;
+        }
 
-    public function getSubcategoriaId()
-    {
-        return $this->subcategoria;
-    }
-    public function setSubcategoriaId($value)
-    {
-        $this->subcategoria = $value;
-    }
+        public function getSubcategoriaId()
+        {
+            return $this->subcategoria;
+        }
+    
+        public function setSubcategoriaId($value)
+        {
+            $this->subcategoria = $value;
+        }
 
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-    public function setNombre($value)
-    {
-        $this->nombre = $value;
-    }
+        public function getNombre()
+        {
+            return $this->nombre;
+        }
+    
+        public function setNombre($value)
+        {
+            $this->nombre = $value;
+        }
 
     public function getDescripcion()
     {
@@ -67,7 +71,7 @@ class Producto
     {
         return $this->foto;
     }
-    public function foto($value)
+    public function setfoto($value)
     {
         $this->foto = $value;
     }
@@ -85,19 +89,19 @@ class Producto
     public function __construct()
     {
         //empty constructors
-        if (func_num_args() == 0) {
-            $this->producto_id = 0;
-            $this->categoria = new Categoria();
-            $this->subcategoria = new Subcategoria();
-            $this->nombre = "";
-            $this->descripcion = "";
-            $this->foto = "";
-            $this->estatus = 1;
+        if (func_num_args()==0){
+            $this-> producto_id = 0;
+            $this-> categoria = new Categoria();
+            $this-> subcategoria = new Subcategoria();
+            $this-> nombre = "";
+            $this-> descripcion = "";
+            $this-> foto = "";
+            $this-> estatus = 1;
         }
         //constructor with data from database
-        if (func_num_args() == 1) {
+        if(func_num_args()==1){
             //get id
-            $producto_id = func_get_arg(0);
+            $producto_id= func_get_arg(0);
             //get connection
             $connection = MysqlConnection::getConnection();
             //query
@@ -111,29 +115,18 @@ class Producto
             //execute
             $command->execute();
             //bind result
-            $command->bind_result(
-                $producto_id,
-                $categoria_id,
-                $categoriaNombre,
-                $categoriaEstatus,
-                $subcategoria_id,
-                $subcategoriaNombre,
-                $subcategoriaEstatus,
-                $nombre,
-                $descripcion,
-                $foto,
-                $estatus
-            );
+            $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+            $foto, $estatus);
             //record was found
-            if ($command->fetch()) {
+            if($command->fetch()){
                 $this->producto_id = $producto_id;
-                $this->categoria = new Categoria($categoria_id, $categoriaNombre, $categoriaEstatus);
-                $this->subcategoria = new subcategoria($subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus);
+                $this->categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+                $this->subcategoria = new subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
                 $this->nombre = $nombre;
                 $this->descripcion = $descripcion;
                 $this->foto = $foto;
                 $this->estatus = $estatus;
-            } else {
+            }else{
                 //throw exception if record not found
                 throw new RecordNotFoundException($producto_id);
             }
@@ -143,7 +136,7 @@ class Producto
             $connection->close();
         }
         //constructor with data from arguments
-        if (func_num_args() == 7) {
+        if(func_num_args() == 7){
             //get arguments
             $arguments = func_get_args();
             //pass arguments to attributes
@@ -169,7 +162,6 @@ class Producto
                     'nombre' => $this->nombre,
                     'descripcion' => $this->descripcion,
                     'foto' => $this->foto,
-
                     'estatus' => $this->estatus)
             );
         }else{
@@ -180,6 +172,40 @@ class Producto
         }
     }
 
+    public function getProductByName($nombre){
+        //get connection
+        $connection = MysqlConnection::getConnection();
+        //query
+        $query = "Select p.producto_id, c.categoria_id, c.nombre, c.estatus, s.subcategoria_id,s.nombre , s.estatus, 
+        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id
+        WHERE p.nombre COLLATE utf8mb4_bin  = ?";
+        //command
+        $command = $connection->prepare($query);
+        //bind parameter
+        $command->bind_param('s', $nombre);
+        //execute
+        $command->execute();
+        //bind result
+        $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+        $foto, $estatus);
+        //record was found
+        if($command->fetch()){
+            $this->producto_id = $producto_id;
+            $this->categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+            $this->subcategoria = new subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
+            $this->nombre = $nombre;
+            $this->descripcion = $descripcion;
+            $this->foto = $foto;
+            $this->estatus = $estatus;
+        }else{
+            //throw exception if record not found
+            throw new RecordNotFoundException($producto_id);
+        }
+        //close command
+        mysqli_stmt_close($command);
+        //close connection
+        $connection->close();
+    }
 
     public static function getAll()
     {
@@ -195,33 +221,15 @@ class Producto
         //execute
         $command->execute();
         //bind results
-        $command->bind_result(
-            $producto_id,
-            $categoria_id,
-            $categoriaNombre,
-            $categoriaEstatus,
-            $subcategoria_id,
-            $subcategoriaNombre,
-            $subcategoriaEstatus,
-            $nombre,
-            $descripcion,
-            $foto,
-            $estatus
-        );
+        $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+        $foto, $estatus);
         //record was found
         //fetch data
-        while ($command->fetch()) {
-            $categoria = new Categoria($categoria_id, $categoriaNombre, $categoriaEstatus);
-            $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus);
-            array_push($records, new Producto(
-                $producto_id,
-                $categoria,
-                $subcategoria,
-                $nombre,
-                $descripcion,
-                $foto,
-                $estatus
-            ));
+        while($command->fetch()){
+            $categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+            $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
+            array_push($records, new Producto($producto_id, $categoria, $subcategoria, $nombre, $descripcion, 
+            $foto, $estatus));
         }
         //close command
         mysqli_stmt_close($command);
@@ -231,17 +239,65 @@ class Producto
         return $records;
     }
 
+    public static function getAllPagina($pagina, $cantidad)
+    {
+        //list of records
+        $records = array();
+        //get connection
+        $connection = MysqlConnection::getConnection();
+        //query
+        $query = "Select p.producto_id, c.categoria_id, c.nombre, c.estatus, s.subcategoria_id,s.nombre , s.estatus, 
+        p.nombre, p.descripcion, p.foto, p.estatus From producto p LEFT JOIN categoria c ON p.categoria_id = c.categoria_id 
+        LEFT JOIN subcategoria s ON p.subcategoria_id = s.subcategoria_id WHERE p.estatus = 1 LIMIT ?, ?;";
+        //command
+        $command = $connection->prepare($query);
+        //bind parameter
+        $command->bind_param('ii', $pagina, $cantidad);
+        //execute
+        $command->execute();
+        //bind results
+        $command->bind_result($producto_id, $categoria_id, $categoriaNombre ,$categoriaEstatus, $subcategoria_id, $subcategoriaNombre, $subcategoriaEstatus, $nombre, $descripcion, 
+        $foto, $estatus);
+        //record was found
+        //fetch data
+        while($command->fetch()){
+            $categoria = new Categoria($categoria_id, $categoriaNombre ,$categoriaEstatus);
+            $subcategoria = new Subcategoria($subcategoria_id, $subcategoriaNombre ,$subcategoriaEstatus);
+            array_push($records, new Producto($producto_id, $categoria, $subcategoria, $nombre, $descripcion, 
+            $foto, $estatus));
+        }
+        //close command
+        mysqli_stmt_close($command);
+        //close connection
+        $connection->close();
+        //Return records
+        return $records;
+    }
+    
+    //represent object in JSON format
+    public static function getAllPaginaByJson($pagina, $cantidad)
+    {
+        //list
+        $list = array();
+        //get all
+        foreach(self::getAllPagina($pagina, $cantidad) as $record){
+            array_push($list, json_decode($record->toJson()));
+        }
+        //return list
+        return json_encode($list);
+    }
+
     //represent object in JSON format
     public static function getAllByJson()
     {
-    //list
-    $list = array();
-    //get all
-    foreach(self::getAll() as $record){
-        array_push($list, json_decode($record->toJson()));
-    }
-    //return list
-    return json_encode($list);
+        //list
+        $list = array();
+        //get all
+        foreach(self::getAll() as $record){
+            array_push($list, json_decode($record->toJson()));
+        }
+        //return list
+        return json_encode($list);
     }
 
     //get all by categoria
@@ -264,6 +320,7 @@ class Producto
             if( $category == "p.nombre"){
                 $query .= "like ? and ";
                 $types .= 's';
+                $element.="%";
             }else{
                 $query .= "= ? and ";
                 $types .= 'i';
@@ -275,7 +332,6 @@ class Producto
         $command = $connection->prepare($query);
         
         //bind param
-        echo $Filter[0];
         if(count($Filter) == 3){
             $command->bind_param($types, $filterValue[0], $filterValue[1], $filterValue[2]);
         }else if(count($Filter) == 2){
@@ -323,12 +379,12 @@ class Producto
         //get connection
         $connection = MysqlConnection::getConnection();
         //query
-        $query = "Insert Into producto (categoria_id, subcategoria_id, nombre, descripcion, foto) Values(?, ?, ?, ?, ?)";
+        $query = "Insert Into producto (categoria_id, subcategoria_id, nombre, descripcion, foto, estatus) Values(?, ?, ?, ?, ?, ?)";
         //command
         $command = $connection->prepare($query);
         //bin parameter
-        $command->bind_param('iisss', $this->categoria, $this->subcategoria, $this->nombre, 
-        $this->descripcion, $this->foto);
+        $command->bind_param('iissss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $this->descripcion, $this->foto, $this->estatus);
         //execute
         $result = $command->execute();
         //close command
@@ -339,6 +395,26 @@ class Producto
         return $result;
     }
 
+    public function update()
+    {
+        //get connection
+        $connection = MysqlConnection::getConnection();
+        //query
+        $query = "Update producto set categoria_id = ?, subcategoria_id = ?, nombre = ?, descripcion = ?, foto = ? where producto_id = ?";
+        //command
+        $command = $connection->prepare($query);
+        //bin parameter
+        $command->bind_param('iissss', $this->categoria, $this->subcategoria, $this->nombre, 
+        $this->descripcion, $this->foto, $this->producto_id);
+        //execute
+        $result = $command->execute();
+        //close command
+        mysqli_stmt_close($command);
+        //close connection
+        $connection->close();
+        //retun result
+        return $result;
+    }
 
     function delete(){
         $connection = MysqlConnection::getConnection();
@@ -353,3 +429,4 @@ class Producto
         return $result;
     }
 }
+?>
